@@ -1,5 +1,7 @@
 package io.openems.edge.evcs.alfen;
 
+import java.util.function.Consumer;
+
 import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
@@ -33,7 +35,9 @@ import io.openems.edge.bridge.modbus.api.element.UnsignedQuadruplewordElement;
 import io.openems.edge.bridge.modbus.api.element.UnsignedWordElement;
 import io.openems.edge.bridge.modbus.api.task.FC16WriteRegistersTask;
 import io.openems.edge.bridge.modbus.api.task.FC3ReadRegistersTask;
+import io.openems.edge.bridge.modbus.api.task.FC6WriteRegisterTask;
 import io.openems.edge.common.channel.Channel;
+import io.openems.edge.common.channel.value.Value;
 import io.openems.edge.common.component.OpenemsComponent;
 import io.openems.edge.common.event.EdgeEventConstants;
 import io.openems.edge.common.taskmanager.Priority;
@@ -58,22 +62,20 @@ import io.openems.edge.timedata.api.utils.CalculateEnergyFromPower;
 		EdgeEventConstants.TOPIC_CYCLE_EXECUTE_WRITE //
 })
 public class AlfenImpl extends AbstractOpenemsModbusComponent
-		implements Alfen, Evcs, ManagedEvcs, OpenemsComponent, ModbusComponent, EventHandler, TimedataProvider {
+		implements Alfen, Evcs, ManagedEvcs, OpenemsComponent, ModbusComponent, EventHandler {
 
 	private final Logger log = LoggerFactory.getLogger(AlfenImpl.class);
+	private static final int DETECT_PHASE_ACTIVITY = 100; // W
 
 	protected Config config;
+
+	private Long energyAtSessionStart = 0L;
 
 	@Reference
 	private EvcsPower evcsPower;
 
 	@Reference
 	protected ConfigurationAdmin cm;
-
-	@Reference(policy = ReferencePolicy.DYNAMIC, policyOption = ReferencePolicyOption.GREEDY, cardinality = ReferenceCardinality.OPTIONAL)
-	private volatile Timedata timedata = null;
-
-	private CalculateEnergyFromPower calculateTotalEnergy;
 
 	private final ChargeStateHandler chargeStateHandler = new ChargeStateHandler(this);
 
@@ -107,8 +109,16 @@ public class AlfenImpl extends AbstractOpenemsModbusComponent
 		 * the fixed hardware limit and the phases used for charging
 		 */
 		Evcs.addCalculatePowerLimitListeners(this);
+		this.<Channel<Status>>channel(Evcs.ChannelId.STATUS).onChange((current, prev) -> {
+			if ((current.orElse(Status.UNDEFINED).equals(Status.READY_FOR_CHARGING) || current.orElse(Status.UNDEFINED).equals(Status.CHARGING))
+					&& !(prev.orElse(Status.UNDEFINED).equals(Status.READY_FOR_CHARGING) || prev.orElse(Status.UNDEFINED).equals(Status.CHARGING))) {
+				this.energyAtSessionStart = this.getActiveConsumptionEnergy().get();
+			}
+		});
 
 		this.applyConfig(context, config);
+		this.getModbusCommunicationFailedChannel()
+				.onSetNextValue(t -> this._setChargingstationCommunicationFailed(t.orElse(false)));
 	}
 
 	@Modified
@@ -122,7 +132,6 @@ public class AlfenImpl extends AbstractOpenemsModbusComponent
 
 	private void applyConfig(ComponentContext context, Config config) {
 		this.config = config;
-		this.calculateTotalEnergy = new CalculateEnergyFromPower(this, Evcs.ChannelId.ACTIVE_CONSUMPTION_ENERGY);
 		this._setFixedMinimumHardwarePower(config.minHwPower());
 		this._setFixedMaximumHardwarePower(config.maxHwPower());
 		this._setPowerPrecision(1);
@@ -146,11 +155,11 @@ public class AlfenImpl extends AbstractOpenemsModbusComponent
 			return;
 		}
 		switch (event.getTopic()) {
-		case EdgeEventConstants.TOPIC_CYCLE_BEFORE_PROCESS_IMAGE:
-			this.calculateTotalEnergy.update(this.getChargePower().orElse(0));
-			break;
 		case EdgeEventConstants.TOPIC_CYCLE_EXECUTE_WRITE:
 			this.writeHandler.run();
+			break;
+		case EdgeEventConstants.TOPIC_CYCLE_AFTER_PROCESS_IMAGE:
+			this.calculateSessionEnergy();
 			break;
 		}
 	}
@@ -211,8 +220,14 @@ public class AlfenImpl extends AbstractOpenemsModbusComponent
 
 		);
 		this.addStatusListener();
+		this.addPhasesListener();
 		return modbusProtocol;
 
+	}
+
+	private void calculateSessionEnergy() {
+		var sessionEnergy = (int) (this.getActiveConsumptionEnergy().orElse(0L) - this.energyAtSessionStart);
+		this._setEnergySession(sessionEnergy);
 	}
 
 	private void addStatusListener() {
@@ -245,10 +260,26 @@ public class AlfenImpl extends AbstractOpenemsModbusComponent
 		});
 	}
 
-	@Override
-	public Timedata getTimedata() {
-		// TODO Auto-generated method stub
-		return this.timedata;
+	private void addPhasesListener() {
+		final Consumer<Value<Float>> setPhases = ignore -> {
+			var phases = 0;
+			if (this.getPowerL1().orElse(0.0f) > DETECT_PHASE_ACTIVITY) {
+				phases++;
+			}
+			if (this.getPowerL2().orElse(0.0f) > DETECT_PHASE_ACTIVITY) {
+				phases++;
+			}
+			if (this.getPowerL3().orElse(0.0f) > DETECT_PHASE_ACTIVITY) {
+				phases++;
+			}
+			if (phases == 0) {
+				phases = 3;
+			}
+			this._setPhases(phases);
+		};
+		this.getPowerL1Channel().onUpdate(setPhases);
+		this.getPowerL2Channel().onUpdate(setPhases);
+		this.getPowerL3Channel().onUpdate(setPhases);
 	}
 
 	@Override
@@ -268,8 +299,9 @@ public class AlfenImpl extends AbstractOpenemsModbusComponent
 
 	@Override
 	public boolean applyChargePowerLimit(int power) throws Exception {
-		float current = Long.valueOf(Math.round((power * 1000 / 230.0) / 3)).intValue() / 1000;
-		this.channel(Alfen.ChannelId.MODBUS_SLAVE_MAX_CURRENT).setNextValue(current);
+		float current = this._toCurrent(power);
+		this.logDebug("Setting current " + current + " from power " + power);
+		this._setSlaveMaxCurrent(current);
 		return true;
 	}
 
@@ -298,6 +330,11 @@ public class AlfenImpl extends AbstractOpenemsModbusComponent
 		if (this.config.debugMode()) {
 			this.logInfo(this.log, message);
 		}
+	}
+
+	@Override
+	public String debugLog() {
+		return "Limit:" + this.getSetChargePowerLimit().orElse(null) + "|" + this.getStatus().getName();
 	}
 
 }

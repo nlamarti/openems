@@ -59,7 +59,6 @@
 	bnd.identity;id='io.openems.edge.controller.api.rest',\
 	bnd.identity;id='io.openems.edge.controller.api.websocket',\
 	bnd.identity;id='io.openems.edge.controller.asymmetric.balancingcosphi',\
-	bnd.identity;id='io.openems.edge.controller.asymmetric.fixreactivepower',\
 	bnd.identity;id='io.openems.edge.controller.asymmetric.peakshaving',\
 	bnd.identity;id='io.openems.edge.controller.asymmetric.phaserectification',\
 	bnd.identity;id='io.openems.edge.controller.channelthreshold',\
@@ -178,18 +177,7 @@
 	bnd.identity;id='io.openems.edge.timeofusetariff.awattar',\
 	bnd.identity;id='io.openems.edge.timeofusetariff.corrently',\
 	bnd.identity;id='io.openems.edge.timeofusetariff.tibber',\
-	bnd.identity;id='io.openems.edge.evcs.alfen',\
-	osgi.identity;filter:='(&(osgi.identity=javax.servlet-api)(version>=3.1.0))',\
-	osgi.identity;filter:='(&(osgi.identity=org.apache.felix.javax.servlet)(version>=1.0.0))',\
-	osgi.identity;filter:='(&(osgi.identity=org.apache.tomcat-servlet-api)(version>=9.0.56))',\
-	osgi.identity;filter:='(&(osgi.identity=org.conscrypt)(version>=2.5.1))',\
-	osgi.identity;filter:='(&(osgi.identity=org.eclipse.jetty.jmx)(version>=9.4.28))',\
-	osgi.identity;filter:='(&(osgi.identity=org.mongodb.mongo-java-driver)(version>=3.12.11))',\
-	osgi.identity;filter:='(&(osgi.identity=org.mongodb.mongo-java-driver)(version>=3.12.3))',\
-	osgi.identity;filter:='(&(osgi.identity=org.osgi.compendium)(version>=4.1.0))',\
-	osgi.identity;filter:='(&(osgi.identity=org.osgi.service.coordinator)(version>=1.0.2))',\
-	osgi.identity;filter:='(&(osgi.identity=osgi.cmpn)(version>=7.0.0))',\
-	osgi.identity;filter:='(&(osgi.identity=osgi.enterprise)(version>=4.2.0))'
+	bnd.identity;id='io.openems.edge.evcs.alfen'
 -runbundles: \
 	Java-WebSocket;version='[1.5.3,1.5.4)',\
 	com.fazecast.jSerialComm;version='[2.5.1,2.5.2)',\
@@ -225,7 +213,6 @@
 	io.openems.edge.controller.api.rest;version=snapshot,\
 	io.openems.edge.controller.api.websocket;version=snapshot,\
 	io.openems.edge.controller.asymmetric.balancingcosphi;version=snapshot,\
-	io.openems.edge.controller.asymmetric.fixreactivepower;version=snapshot,\
 	io.openems.edge.controller.asymmetric.peakshaving;version=snapshot,\
 	io.openems.edge.controller.asymmetric.phaserectification;version=snapshot,\
 	io.openems.edge.controller.channelthreshold;version=snapshot,\
