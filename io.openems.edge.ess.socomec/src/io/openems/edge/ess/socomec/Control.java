@@ -4,7 +4,6 @@ package io.openems.edge.ess.socomec;
 import io.openems.common.types.OptionsEnum;
 import io.openems.edge.bridge.modbus.api.ElementToChannelConverter;
 import io.openems.edge.bridge.modbus.sunspec.DefaultSunSpecModel;
-import io.openems.edge.common.sum.GridMode;
 
 public enum Control implements OptionsEnum {
     OFF(0, "Off"),

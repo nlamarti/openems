@@ -10,6 +10,10 @@ import io.openems.edge.ess.api.ManagedSymmetricEss;
 
 public interface EssSocomecPMS extends ManagedSymmetricEss, ModbusComponent, ModbusSlave {
     enum ChannelId implements io.openems.edge.common.channel.ChannelId {
+        SET_OPERATION(Doc.of(SetOperation.values())
+                .accessMode(AccessMode.READ_WRITE)),
+        STATUS(Doc.of(Status.values()).
+                accessMode(AccessMode.READ_WRITE)),
         ACTIVE_POWER_CONTROL(Doc.of(Control.values())
                 .accessMode(AccessMode.READ_WRITE)),
         SET_ACTIVE_POWER(Doc.of(OpenemsType.INTEGER)
@@ -25,6 +29,10 @@ public interface EssSocomecPMS extends ManagedSymmetricEss, ModbusComponent, Mod
         REACTIVE_POWER_MODE(Doc.of(PowerMode.values())
                 .accessMode(AccessMode.READ_WRITE)),
         BATTERY_CONTROL(Doc.of(Control.values())
+                .accessMode(AccessMode.READ_WRITE)),
+        HEARTBEAT(Doc.of(OpenemsType.INTEGER)
+                .accessMode(AccessMode.READ_ONLY)),
+        SET_HEARTBEAT(Doc.of(OpenemsType.INTEGER)
                 .accessMode(AccessMode.READ_WRITE));
         private final Doc doc;
 
