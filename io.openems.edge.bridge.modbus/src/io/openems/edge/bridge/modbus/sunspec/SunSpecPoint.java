@@ -160,6 +160,8 @@ public interface SunSpecPoint {
 				return new StringWordElement(startAddress, 20);
 			case STRING25:
 				return new StringWordElement(startAddress, 25);
+			case STRING32:
+				return new StringWordElement(startAddress, 32);
 			}
 			throw new IllegalArgumentException(
 					"Point [" + this.label + "]: Type [" + this.type + "] is not supported!");
@@ -213,6 +215,7 @@ public interface SunSpecPoint {
 			case STRING16:
 			case STRING20:
 			case STRING25:
+			case STRING32:
 				return OpenemsType.STRING;
 			}
 			throw new IllegalArgumentException("Unable to get matching OpenemsType for " + this.type);
@@ -280,6 +283,7 @@ public interface SunSpecPoint {
 			case STRING2:
 			case STRING20:
 			case STRING25:
+			case STRING32:
 			case STRING4:
 			case STRING5:
 			case STRING6:

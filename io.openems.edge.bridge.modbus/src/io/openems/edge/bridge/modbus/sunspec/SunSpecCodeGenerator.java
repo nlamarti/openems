@@ -2,6 +2,15 @@ package io.openems.edge.bridge.modbus.sunspec;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.Comparator;
+import java.util.Enumeration;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
+import java.nio.file.Path;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -10,16 +19,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.function.Function;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
+import java.util.Objects;
 
 import com.google.common.base.CaseFormat;
-
+import com.google.gson.Gson;
 import io.openems.common.channel.AccessMode;
 import io.openems.common.channel.Unit;
 import io.openems.common.exceptions.OpenemsError.OpenemsNamedException;
@@ -31,9 +34,6 @@ import io.openems.edge.bridge.modbus.sunspec.SunSpecPoint.PointType;
 /**
  * This tool converts SunSpec XML definitions to Java code suitable for the
  * OpenEMS SunSpec implementation.
- *
- * <p>
- * Download XML files from https://github.com/sunspec/models.
  */
 public class SunSpecCodeGenerator {
 
@@ -41,14 +41,10 @@ public class SunSpecCodeGenerator {
 	 * Path to the SunSpec model XML files; download them from
 	 * https://github.com/sunspec/models.
 	 */
-	private static final String SUNSPEC_JSON_PATH = System.getProperty("user.home") + "\\git\\models\\json\\";
-	/**
-	 * Path to the generated output file.
-	 */
-	private static final String OUT_FILE_PATH = System.getProperty("user.home") + "\\git\\models\\SunSpecModel.java";
+	private static final String SUNSPEC_GIT_URL = "https://github.com/sunspec/models/archive/refs/heads/master.zip";
 
 	/**
-	 * XML files that should be ignored; mainly because certain features are not
+	 * Json files that should be ignored; mainly because certain features are not
 	 * implemented yet.
 	 */
 	private static final Set<String> IGNORE_FILES = new HashSet<>(Arrays.asList(//
@@ -116,10 +112,43 @@ public class SunSpecCodeGenerator {
 	 * @throws Exception on error
 	 */
 	public static void main(String[] args) throws Exception {
-		System.out.println(SUNSPEC_JSON_PATH);
-		var generator = new SunSpecCodeGenerator();
-		var models = generator.parseSunSpecFiles();
-		generator.writeSunSpecModelJavaFile(models);
+		Path modelsDir = downloadSunSpecFiles();
+		var models = parseSunSpecFiles(modelsDir);
+		writeSunSpecModelJavaFile(models);
+	}
+
+	private static Path downloadSunSpecFiles() throws IOException {
+		Path tempDir = Files.createTempDirectory("zipextract");
+		URL url = new URL(SUNSPEC_GIT_URL);
+		try (InputStream in = url.openStream()) {
+			Files.copy(in, tempDir.resolve("temp.zip"));
+		}
+		Path zipFilePath = tempDir.resolve("temp.zip");
+		unzip(zipFilePath.toString(), tempDir.toString());
+		return tempDir.resolve("models-master/json");
+	}
+
+	private static void unzip(String zipFilePath, String destDir) throws IOException {
+		try (ZipFile zipFile = new ZipFile(zipFilePath)) {
+			Enumeration<? extends ZipEntry> entries = zipFile.entries();
+			while (entries.hasMoreElements()) {
+				ZipEntry entry = entries.nextElement();
+				String entryName = entry.getName();
+				Path entryPath = Paths.get(destDir, entryName);
+				if (entry.isDirectory()) {
+					Files.createDirectories(entryPath);
+				} else {
+					try (InputStream is = zipFile.getInputStream(entry);
+						 OutputStream os = Files.newOutputStream(entryPath)) {
+						byte[] buffer = new byte[1024];
+						int length;
+						while ((length = is.read(buffer)) > 0) {
+							os.write(buffer, 0, length);
+						}
+					}
+				}
+			}
+		}
 	}
 
 	/**
@@ -128,55 +157,21 @@ public class SunSpecCodeGenerator {
 	 * @return a list of Models
 	 * @throws Exception on error
 	 */
-	private List<Model> parseSunSpecFiles() throws Exception {
+	private static List<Model> parseSunSpecFiles(Path folder) throws Exception {
+		Gson gson =  new Gson();
 		List<Model> result = new ArrayList<>();
-		for (File file : new File(SUNSPEC_JSON_PATH).listFiles(file -> //
-		file.getName().startsWith("model") //
-				&& file.getName().endsWith(".json") //
-				&& !IGNORE_FILES.contains(file.getName()))) {
+		for (File file : Objects.requireNonNull(folder.toFile().listFiles(file -> //
+				file.getName().startsWith("model") //
+						&& file.getName().endsWith(".json") //
+						&& !IGNORE_FILES.contains(file.getName())))) {
 			try {
-				var model = this.parseSunSpecFile(Files.readString(file.toPath()));
-				result.add(model);
-
+				result.add(gson.fromJson(Files.newBufferedReader(file.toPath()), Model.class));
 			} catch (Exception e) {
 				throw new Exception("Error while reading from " + file, e);
 			}
 		}
+		result.sort(Comparator.comparing(Model::getId));
 		return result;
-	}
-
-	/**
-	 * Parses a SunSpec XML file.
-	 *
-	 * @param file the SunSpec XML file handler
-	 * @return the Model
-	 * @throws Exception on error
-	 */
-	private Model parseSunSpecFile(String file) throws Exception {
-		var json = new JSONObject(file);
-
-		var generator = new SunSpecCodeGenerator();
-		return generator.parseSunSpecModels(json);
-	}
-
-	/**
-	 * Parses the element sunSpecModels.
-	 *
-	 * <pre>
-	 *   &lt;sunSpecModels v="1"&gt;
-	 * </pre>
-	 *
-	 * <ul>
-	 * <li>xs:attribute name="v" type="xs:string" default="1"
-	 * </ul>
-	 *
-	 * @param sunSpecModels the 'sunSpecModels' json
-	 * @return the Model
-	 * @throws OpenemsNamedException on error
-	 * @throws JSONException on json error
-	 */
-	private Model parseSunSpecModels(JSONObject sunSpecModels) throws OpenemsNamedException, JSONException {
-		return new Model(sunSpecModels);
 	}
 
 	/**
@@ -185,26 +180,25 @@ public class SunSpecCodeGenerator {
 	 * @param models a list of Models
 	 * @throws IOException on error
 	 */
-	private void writeSunSpecModelJavaFile(List<Model> models) throws IOException {
-		try (var w = Files.newBufferedWriter(Paths.get(OUT_FILE_PATH))) {
-			w.write("package io.openems.edge.bridge.modbus.sunspec;");
-			w.newLine();
-			w.newLine();
-			w.write("import io.openems.common.channel.AccessMode;");
-			w.newLine();
-			w.write("import io.openems.common.channel.Unit;");
-			w.newLine();
-			w.write("import io.openems.common.types.OptionsEnum;");
-			w.newLine();
-			w.newLine();
-			w.write("/**");
-			w.newLine();
-			w.write(" * Do not touch this file. It is auto-generated by SunSpecCodeGenerator.");
-			w.newLine();
-			w.write(" */");
-			w.newLine();
-			w.write("public enum SunSpecModel {");
-			w.newLine();
+	private static void writeSunSpecModelJavaFile(List<Model> models) throws IOException, URISyntaxException, OpenemsNamedException {
+		File location = new File(SunSpecCodeGenerator.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath());
+		String filePath = location.getParent() + File.separator + "src" + File.separator + "io.openems.edge.bridge.modbus".replace(".", File.separator) + File.separator + "sunspec" + File.separator + "DefaultSunSpecModel.java";
+		System.out.println(filePath);
+		try (var w = Files.newBufferedWriter(Paths.get(filePath))) {
+			w.write("""
+					  // CHECKSTYLE:OFF
+					  
+					package io.openems.edge.bridge.modbus.sunspec;
+					       
+					import io.openems.common.channel.AccessMode;
+					import io.openems.common.channel.Unit;
+					import io.openems.common.types.OptionsEnum;
+					       
+					/**
+					 * Do not touch this file. It is auto-generated by SunSpecCodeGenerator.
+					 */
+					public enum DefaultSunSpecModel implements SunSpecModel {
+							""");
 
 			/*
 			 * Write main Model enum
@@ -213,17 +207,17 @@ public class SunSpecCodeGenerator {
 				var model = models.get(i);
 				w.write("	S_" + model.id + "(//");
 				w.newLine();
-				w.write("			\"" + esc(model.label) + "\", //");
+				w.write("			\"" + esc(model.group.label) + "\", //");
 				w.newLine();
-				w.write("			\"" + esc(model.description) + "\", //");
+				w.write("			\"" + esc(model.group.desc) + "\", //");
 				w.newLine();
-				w.write("			\"" + esc(model.notes) + "\", //");
+				w.write("			\"" + esc(model.group.notes) + "\", //");
 				w.newLine();
-				w.write("			" + model.len + ", //");
+				w.write("			" + model.group.getLength() + ", //");
 				w.newLine();
-				w.write("			SunSpecModel.S" + model.id + ".values(), //");
+				w.write("			DefaultSunSpecModel.S" + model.id + ".values(), //");
 				w.newLine();
-				w.write("			SunSpecModelType." + model.modelType + " //");
+				w.write("			SunSpecModelType." + model.getType() + " //");
 				w.newLine();
 				w.write("	)");
 				if (i == models.size() - 1) {
@@ -241,37 +235,36 @@ public class SunSpecCodeGenerator {
 			for (Model model : models) {
 				w.write("	public static enum S" + model.id + " implements SunSpecPoint {");
 				w.newLine();
-				for (var i = 0; i < model.points.size(); i++) {
-					var point = model.points.get(i);
-					var pointUpperId = toUpperUnderscore(point.id);
+				for (var i = 0; i < model.group.points.size(); i++) {
+					var point = model.group.points.get(i);
+					var pointUpperId = toUpperUnderscore(point.name);
 					w.write("		" + pointUpperId + "(new PointImpl(//");
 					w.newLine();
 					w.write("				\"S" + model.id + "_" + pointUpperId + "\", //");
 					w.newLine();
 					w.write("				\"" + esc(point.label) + "\", //");
 					w.newLine();
-					w.write("				\"" + esc(point.description) + "\", //");
+					w.write("				\"" + esc(point.desc) + "\", //");
 					w.newLine();
 					w.write("				\"" + esc(point.notes) + "\", //");
 					w.newLine();
-					w.write("				PointType." + point.type.name() + ", //");
+					w.write("				PointType." + point.getType().name() + ", //");
 					w.newLine();
-					w.write("				" + point.mandatory + ", //");
+					w.write("				" + point.isMandatory() + ", //");
 					w.newLine();
-					w.write("				AccessMode." + point.accessMode.name() + ", //");
+					w.write("				AccessMode." + point.getAccess().name() + ", //");
 					w.newLine();
-					w.write("				Unit." + point.unit.name() + ", //");
+					w.write("				Unit." + point.getUnit().name() + ", //");
 					w.newLine();
-					w.write("				"
-							+ (point.scaleFactor.isPresent() ? "\"" + point.scaleFactor.get() + "\"" : null) + ", //");
+					w.write("				" +  Optional.ofNullable(point.sf).map(s -> "\"" + s + "\"").orElse(null) + ", //");
 					w.newLine();
-					if (point.symbols.length == 0) {
+					if (point.symbols.isEmpty()) {
 						w.write("				new OptionsEnum[0]))");
 					} else {
-						w.write("				S" + model.id + "_" + point.id + ".values()))");
+						w.write("				S" + model.id + "_" + point.name + ".values()))");
 					}
 
-					if (i == model.points.size() - 1) {
+					if (i == model.group.points.size() - 1) {
 						w.write("; //");
 					} else {
 						w.write(", //");
@@ -304,18 +297,18 @@ public class SunSpecCodeGenerator {
 				/*
 				 * For SunSpecPoints with Symbols write OpenEMS OptionsEnum
 				 */
-				for (Point point : model.points) {
-					if (point.symbols.length == 0) {
+				for (Point point : model.group.points) {
+					if (point.symbols.isEmpty()) {
 						continue;
 					}
 
-					w.write("	public static enum S" + model.id + "_" + point.id + " implements OptionsEnum {");
+					w.write("	public static enum S" + model.id + "_" + point.name + " implements OptionsEnum {");
 					w.newLine();
 					w.write("		UNDEFINED(-1, \"Undefined\"), //");
 					w.newLine();
-					for (var i = 0; i < point.symbols.length; i++) {
-						var symbol = point.symbols[i];
-						var symbolId = symbol.id;
+					for (var i = 0; i < point.symbols.size(); i++) {
+						var symbol = point.symbols.get(i);
+						var symbolId = symbol.getId();
 						symbolId = toUpperUnderscore(symbolId);
 
 						switch (symbolId) {
@@ -325,93 +318,72 @@ public class SunSpecCodeGenerator {
 						}
 
 						w.write("		" + symbolId + "(" + symbol.value + ", \"" + symbolId + "\")");
-						if (i == point.symbols.length - 1) {
+						if (i == point.symbols.size() - 1) {
 							w.write("; //");
 						} else {
 							w.write(", //");
 						}
 						w.newLine();
 					}
-					w.newLine();
-					w.write("		private final int value;");
-					w.newLine();
-					w.write("		private final String name;");
-					w.newLine();
-					w.newLine();
-					w.write("		private S" + model.id + "_" + point.id + "(int value, String name) {");
-					w.newLine();
-					w.write("			this.value = value;");
-					w.newLine();
-					w.write("			this.name = name;");
-					w.newLine();
-					w.write("		}");
-					w.newLine();
-					w.newLine();
-					w.write("		@Override");
-					w.newLine();
-					w.write("		public int getValue() {");
-					w.newLine();
-					w.write("			return value;");
-					w.newLine();
-					w.write("		}");
-					w.newLine();
-					w.newLine();
-					w.write("		@Override");
-					w.newLine();
-					w.write("		public String getName() {");
-					w.newLine();
-					w.write("			return name;");
-					w.newLine();
-					w.write("		}");
-					w.newLine();
-					w.newLine();
-					w.write("		@Override");
-					w.newLine();
-					w.write("		public OptionsEnum getUndefined() {");
-					w.newLine();
-					w.write("			return UNDEFINED;");
-					w.newLine();
-					w.write("		}");
-					w.newLine();
-					w.write("	}");
-					w.newLine();
-					w.newLine();
+					w.write("""
+
+									private final int value;
+									private final String name;
+								   
+									private %s(int value, String name) {
+										this.value = value;
+										this.name = name;
+									}
+								   
+									@Override
+									public int getValue() {
+										return value;
+									}
+								   
+									@Override
+									public String getName() {
+										return name;
+									}
+								   
+									@Override
+									public OptionsEnum getUndefined() {
+										return UNDEFINED;
+									}
+								}
+
+							""".formatted("S" + model.id + "_" + point.name));
 				}
 			}
-
-			w.write("	public final String label;");
-			w.newLine();
-			w.write("	public final String description;");
-			w.newLine();
-			w.write("	public final String notes;");
-			w.newLine();
-			w.write("	public final int length;");
-			w.newLine();
-			w.write("	public final SunSpecPoint[] points;");
-			w.newLine();
-			w.write("	public final SunSpecModelType modelType;");
-			w.newLine();
-			w.newLine();
-			w.write("	private SunSpecModel(String label, String description, String notes, int length, SunSpecPoint[] points,");
-			w.newLine();
-			w.write("			SunSpecModelType modelType) {");
-			w.newLine();
-			w.write("		this.label = label;");
-			w.newLine();
-			w.write("		this.description = description;");
-			w.newLine();
-			w.write("		this.notes = notes;");
-			w.newLine();
-			w.write("		this.length = length;");
-			w.newLine();
-			w.write("		this.points = points;");
-			w.newLine();
-			w.write("		this.modelType = modelType;");
-			w.newLine();
-			w.write("	}");
-			w.newLine();
-			w.write("}");
-			w.newLine();
+			w.write("""
+						public final String label;
+						public final String description;
+						public final String notes;
+						public final int length;
+						public final SunSpecPoint[] points;
+						public final SunSpecModelType modelType;
+					     
+						private DefaultSunSpecModel(String label, String description, String notes, int length, SunSpecPoint[] points,
+								SunSpecModelType modelType) {
+							this.label = label;
+							this.description = description;
+							this.notes = notes;
+							this.length = length;
+							this.points = points;
+							this.modelType = modelType;
+						}
+					     
+						@Override
+						public SunSpecPoint[] points() {
+							return this.points;
+						}
+					     
+						@Override
+						public String label() {
+							return this.label;
+						}
+					}
+					// CHECKSTYLE:ON
+					""");
 		}
 	}
 
@@ -421,7 +393,7 @@ public class SunSpecCodeGenerator {
 	 * @param string original string
 	 * @return escaped string
 	 */
-	private static final String esc(String string) {
+	private static String esc(String string) {
 		if (string == null) {
 			return "";
 		}
@@ -431,324 +403,148 @@ public class SunSpecCodeGenerator {
 				.trim();
 	}
 
-
-	/**
-	 * POJO container for a SunSpec Model.
-	 */
 	public static class Model {
-		protected final int id;
-		protected final int len;
-		protected final String name;
-		protected final List<Point> points;
-		protected final SunSpecModelType modelType;
+		int id;
+		ModelGroup group;
 
-		protected String label = "";
-		protected String description = "";
-		protected String notes = "";
-
-
-		public Model(JSONObject model) throws JSONException, OpenemsNamedException {
-			this.id = model.getInt("id");
-			var group = model.getJSONObject("group");
-			this.name = group.getString("name");
-			this.label = group.optString("label");
-			this.description = group.optString("desc");
-			var points = group.getJSONArray("points");
-
-	        ArrayList<Point> list = new ArrayList<Point>();
-	        var offset = 0;
-			for (int i = 0; i < points.length(); i++) {
-				var p = new Point(points.getJSONObject(i), offset);
-				list.add(p);
-				offset += p.len;
-			}
-			this.points = list;
-			this.len = this.points.stream().map(p -> p.len).reduce(0, (t, p) -> t + p);
-			this.modelType = SunSpecModelType.getModelType(this.id);
+		public int getId() {
+			return this.id;
 		}
-
-		/**
-		 * Gets the Point with the given Id.
-		 *
-		 * @param id the Point-ID
-		 * @return the Point
-		 * @throws OpenemsException on error
-		 */
-		public Point getPoint(String id) throws OpenemsException {
-			for (Point point : this.points) {
-				if (point.id.equals(id)) {
-					return point;
-				}
-			}
-			throw new OpenemsException("Unable to find Point with ID " + id);
+		public SunSpecModelType getType() {
+			return SunSpecModelType.getModelType(this.id);
 		}
+	}
 
-		@Override
-		public String toString() {
-			return "Model [id=" + this.id + ", name=" + this.name + ", points=" + this.points
-					+ ", label=" + this.label + ", description=" + this.description + ", notes=" + this.notes + "]";
+	public static class ModelGroup {
+		String name;
+		String label = "";
+		String desc = "";
+		String notes = "";
+		List<Point> points;
+		public int getLength() {
+			return this.points.stream().map(p -> p.size).reduce(0, (t, p) -> t + p);
 		}
 
 	}
 
-	/**
-	 * POJO container for a SunSpec Point.
-	 */
 	public static class Point {
-
-		protected final String id;
-		protected final int len;
-		protected final int offset;
-		protected final PointType type;
-		protected final Optional<String> scaleFactor;
-		protected final Unit unit;
-		protected final AccessMode accessMode;
-		protected final boolean mandatory;
-		protected final PointCategory category;
-		protected final Symbol[] symbols;
-
-		protected String label;
-		protected String description;
-		protected String notes;
-
-		public Point(String id, int len, int offset, PointType type, String scaleFactor, Unit unit,
-				AccessMode accessMode, boolean mandatory, PointCategory category, Symbol[] symbols) {
-			this.id = id;
-			this.len = len;
-			this.offset = offset;
-			this.type = type;
-			this.scaleFactor = Optional.ofNullable(scaleFactor);
-			this.unit = unit;
-			this.accessMode = accessMode;
-			this.mandatory = mandatory;
-			this.category = category;
-			this.symbols = symbols;
+		String name;
+		int size;
+		String label = "";
+		String desc = "";
+		String notes = "";
+		String sf;
+		private String type;
+		private String access;
+		private String mandatory;
+		private String units;
+		final PointCategory category = PointCategory.MEASUREMENT;
+		List<Symbol> symbols = List.of();
+		public PointType getType() {
+			return type.equals("string") ? PointType.valueOf("STRING" + this.size) : PointType.valueOf(this.type.toUpperCase());
 		}
-		
-		public Point(JSONObject point, int offset) throws JSONException, OpenemsNamedException {
-			this.id = point.getString("name");
-			this.len = point.getInt("size");
-			this.label = point.optString("label");
-			this.description = point.optString("desc");
-			this.offset = offset;
-			var t = point.getString("type");
-			if (t.equals("string")) {
-				this.type = PointType.valueOf("STRING" + this.len);
-			} else {
-				this.type = PointType.valueOf(t.toUpperCase());
-			}
-			var sf = point.optString("sf", "");
-			this.scaleFactor = Optional.of(sf);
-			this.unit = toUnit(point.optString("units", ""));
-			var access = point.optString("access", "r");
-			switch (access.toLowerCase()) {
-			case "wo":
-				this.accessMode = AccessMode.WRITE_ONLY;
-				break;
-			case "rw":
-				this.accessMode = AccessMode.READ_WRITE;
-				break;
-			case "r":
-			case "ro":
-			default:
-				this.accessMode = AccessMode.READ_ONLY;
-				break;
-			}
-			this.mandatory = point.optString("mandatory", "N").equals("M");
-			this.category = PointCategory.MEASUREMENT;
-			
-			var symbolsJson = point.optJSONArray("symbols");
-			Symbol[] symbols;
-			if (symbolsJson != null) {
-				symbols = new Symbol[symbolsJson.length()];
-				for (var i = 0; i < symbolsJson.length(); i++) {
-					var symbol = symbolsJson.getJSONObject(i);
-					symbols[i] = new Symbol(symbol);
-				}
-			} else {
-				symbols = new Symbol[0];
-			}
-			this.symbols = symbols;
-
+		public Unit getUnit() throws OpenemsNamedException {
+			return toUnit(Optional.ofNullable(this.units).orElse(""));
 		}
-		
-		
+
+		public AccessMode getAccess() {
+			return switch (Optional.ofNullable(this.access).orElse("").toLowerCase()) {
+				case "wo" ->  AccessMode.WRITE_ONLY;
+				case "rw" ->  AccessMode.READ_WRITE;
+				default -> AccessMode.READ_ONLY;
+			};
+		}
+
+		public boolean isMandatory() {
+			return "M".equals(this.mandatory);
+		}
+
 		static Unit toUnit(String unit) throws OpenemsNamedException {
 			final ThrowingFunction<String, Unit, OpenemsNamedException> toUnit = s -> {
 				s = s.trim();
 				if (s.contains(" ")) {
 					s = s.substring(0, s.indexOf(" "));
 				}
-				switch (s) {
-				case "":
-				case "%ARtg/%dV":
-				case "bps": // not available in OpenEMS
-				case "cos()": // not available in OpenEMS
-				case "deg": // not available in OpenEMS
-				case "Degrees": // not available in OpenEMS
-				case "hhmmss": // not available in OpenEMS
-				case "hhmmss.sssZ": // not available in OpenEMS
-				case "HPa": // not available in OpenEMS
-				case "kO": // not available in OpenEMS
-				case "Mbps": // not available in OpenEMS
-				case "meters": // not available in OpenEMS
-				case "mm": // not available in OpenEMS
-				case "mps": // not available in OpenEMS
-				case "m/s": // not available in OpenEMS
-				case "ohms": // not available in OpenEMS
-				case "Pct": // not available in OpenEMS
-				case "PF": // not available in OpenEMS
-				case "SF": // not available in OpenEMS
-				case "text": // not available in OpenEMS
-				case "Tmd": // not available in OpenEMS
-				case "Tmh": // not available in OpenEMS
-				case "Tms": // not available in OpenEMS
-				case "Various": // not available in OpenEMS
-				case "Vm": // not available in OpenEMS
-				case "W/m2": // not available in OpenEMS
-				case "YYYYMMDD": // not available in OpenEMS
-				case "S": // not available in OpenEMS
-				case "%Max/Sec": // not available in OpenEMS
-					return Unit.NONE;
-				case "%":
-				case "%WHRtg":
-					return Unit.PERCENT;
-				case "A":
-					return Unit.AMPERE;
-				case "Ah":
-				case "AH":
-					return Unit.AMPERE_HOURS;
-				case "C":
-					return Unit.DEGREE_CELSIUS;
-				case "Hz":
-					return Unit.HERTZ;
-				case "kAH":
-					return Unit.KILOAMPERE_HOURS;
-				case "kWh":
-					return Unit.KILOWATT_HOURS;
-				case "mSecs":
-					return Unit.MILLISECONDS;
-				case "Secs":
-					return Unit.SECONDS;
-				case "V":
-					return Unit.VOLT;
-				case "VA":
-					return Unit.VOLT_AMPERE;
-				case "VAh":
-					return Unit.VOLT_AMPERE_HOURS;
-				case "var":
-				case "Var":
-					return Unit.VOLT_AMPERE_REACTIVE;
-				case "varh":
-				case "Varh":
-					return Unit.VOLT_AMPERE_REACTIVE_HOURS;
-				case "W":
-					return Unit.WATT;
-				case "Wh":
-				case "WH":
-					// Validate manually: OpenEMS distinguishes CUMULATED and DISCRETE Watt-Hours.
-					return Unit.CUMULATED_WATT_HOURS;
-				}
+                switch (s) {
+                    // not available in OpenEMS
+                    case "", "%ARtg/%dV", "bps", "cos()", "deg", "Degrees", "hhmmss", "hhmmss.sssZ", "HPa", "kO", "Mbps", "meters", "mm", "mps", "m/s", "ohms", "Pct", "PF", "SF", "text", "Tmd", "Tmh", "Tms", "Various", "Vm", "W/m2", "YYYYMMDD", "S", "%Max/Sec" -> { // not available in OpenEMS
+                        return Unit.NONE;
+                    }
+                    case "%", "%WHRtg" -> {
+                        return Unit.PERCENT;
+                    }
+                    case "A" -> {
+                        return Unit.AMPERE;
+                    }
+                    case "Ah", "AH" -> {
+                        return Unit.AMPERE_HOURS;
+                    }
+                    case "C" -> {
+                        return Unit.DEGREE_CELSIUS;
+                    }
+                    case "Hz" -> {
+                        return Unit.HERTZ;
+                    }
+                    case "kAH" -> {
+                        return Unit.KILOAMPERE_HOURS;
+                    }
+                    case "kWh" -> {
+                        return Unit.KILOWATT_HOURS;
+                    }
+                    case "mSecs" -> {
+                        return Unit.MILLISECONDS;
+                    }
+                    case "Secs" -> {
+                        return Unit.SECONDS;
+                    }
+                    case "V" -> {
+                        return Unit.VOLT;
+                    }
+                    case "VA" -> {
+                        return Unit.VOLT_AMPERE;
+                    }
+                    case "VAh" -> {
+                        return Unit.VOLT_AMPERE_HOURS;
+                    }
+                    case "var", "Var" -> {
+                        return Unit.VOLT_AMPERE_REACTIVE;
+                    }
+                    case "varh", "Varh" -> {
+                        return Unit.VOLT_AMPERE_REACTIVE_HOURS;
+                    }
+                    case "W" -> {
+                        return Unit.WATT;
+                    }
+                    case "Wh", "WH" -> {
+                        // Validate manually: OpenEMS distinguishes CUMULATED and DISCRETE Watt-Hours.
+                        return Unit.CUMULATED_WATT_HOURS;
+                    }
+                }
 				throw new OpenemsException("Unhandled unit [" + s + "]");
 			};
 			return toUnit.apply(unit);
 		}
+	}
 
-		/**
-		 * Gets the Symbol with the given Id.
-		 *
-		 * @param id the Symbol-Id
-		 * @return the Symbol
-		 * @throws OpenemsException on error
-		 */
-		public Symbol getSymbol(String id) throws OpenemsException {
-			for (Symbol symbol : this.symbols) {
-				if (symbol.id.equals(id)) {
-					return symbol;
-				}
-			}
-			throw new OpenemsException("Unable to find Symbol with ID " + id);
-		}
+	public static class Symbol {
+		private String name;
+		int value;
+		String label;
+		String desc;
+		String notes;
 
-		@Override
-		public String toString() {
-			return "Point [id=" + this.id + ", len=" + this.len + ", offset=" + this.offset + ", type=" + this.type
-					+ ", scaleFactor=" + this.scaleFactor.orElse("") + ", unit=" + this.unit + ", access="
-					+ this.accessMode + ", mandatory=" + this.mandatory + ", category=" + this.category + ", symbols="
-					+ Arrays.toString(this.symbols) + ", label=" + this.label + ", description=" + this.description
-					+ ", notes=" + this.notes + "]";
-		}
-
-		/**
-		 * POJO container for a SunSpec Point Symbol.
-		 */
-		public static class Symbol {
-			protected final String id;
-			protected final int value;
-
-			protected String label;
-			protected String description;
-			protected String notes;
-
-			private static Function<String, String> idCleaner = id -> {
-				switch (id) {
-				case "ggOFF":
-				case "ggSLEEPING":
-				case "ggSTARTING":
-				case "ggTHROTTLED":
-				case "ggSHUTTING_DOWN":
-				case "ggFAULT":
-				case "ggSTANDBY":
-					// Special handling for ID 111 point "Operating State"
-					// TODO: create pull-request to fix XML file upstream
-					return id.substring(2);
-				case "M_EVENT_Power_Failure":
-				case "M_EVENT_Under_Voltage":
-				case "M_EVENT_Low_PF":
-				case "M_EVENT_Over_Current":
-				case "M_EVENT_Over_Voltage":
-				case "M_EVENT_Missing_Sensor":
-				case "M_EVENT_Reserved1":
-				case "M_EVENT_Reserved2":
-				case "M_EVENT_Reserved3":
-				case "M_EVENT_Reserved4":
-				case "M_EVENT_Reserved5":
-				case "M_EVENT_Reserved6":
-				case "M_EVENT_Reserved7":
-				case "M_EVENT_Reserved8":
-				case "M_EVENT_OEM01":
-				case "M_EVENT_OEM02":
-				case "M_EVENT_OEM03":
-				case "M_EVENT_OEM04":
-				case "M_EVENT_OEM05":
-				case "M_EVENT_OEM06":
-				case "M_EVENT_OEM07":
-				case "M_EVENT_OEM08":
-				case "M_EVENT_OEM09":
-				case "M_EVENT_OEM10":
-				case "M_EVENT_OEM11":
-				case "M_EVENT_OEM12":
-				case "M_EVENT_OEM13":
-				case "M_EVENT_OEM14":
-				case "M_EVENT_OEM15":
-					// Special handling for ID 202 point "Events"
-					return id.substring(8);
-				default:
-					return id;
-				}
-			};
-
-			protected Symbol(String id, int value) {
-				this.id = idCleaner.apply(id);
-				this.value = value;
-			}
-
-			public Symbol(JSONObject symbol) throws JSONException {
-				this.id = idCleaner.apply(symbol.getString("name"));
-				this.value = symbol.getInt("value");
-				this.label = symbol.optString("label");
-			}
-		}
+		public String getId() {
+            return switch (this.name) {
+                case "ggOFF", "ggSLEEPING", "ggSTARTING", "ggTHROTTLED", "ggSHUTTING_DOWN", "ggFAULT", "ggSTANDBY" ->
+                    // Special handling for ID 111 point "Operating State"
+                    // TODO: create pull-request to fix XML file upstream
+                        this.name.substring(2);
+                case "M_EVENT_Power_Failure", "M_EVENT_Under_Voltage", "M_EVENT_Low_PF", "M_EVENT_Over_Current", "M_EVENT_Over_Voltage", "M_EVENT_Missing_Sensor", "M_EVENT_Reserved1", "M_EVENT_Reserved2", "M_EVENT_Reserved3", "M_EVENT_Reserved4", "M_EVENT_Reserved5", "M_EVENT_Reserved6", "M_EVENT_Reserved7", "M_EVENT_Reserved8", "M_EVENT_OEM01", "M_EVENT_OEM02", "M_EVENT_OEM03", "M_EVENT_OEM04", "M_EVENT_OEM05", "M_EVENT_OEM06", "M_EVENT_OEM07", "M_EVENT_OEM08", "M_EVENT_OEM09", "M_EVENT_OEM10", "M_EVENT_OEM11", "M_EVENT_OEM12", "M_EVENT_OEM13", "M_EVENT_OEM14", "M_EVENT_OEM15" ->
+                    // Special handling for ID 202 point "Events"
+                        this.name.substring(8);
+                default -> this.name;
+            };
+		};
 	}
 
 	protected static String toUpperUnderscore(String string) {
