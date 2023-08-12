@@ -19,9 +19,9 @@ import io.openems.edge.common.sum.GridMode;
 import io.openems.edge.common.taskmanager.Priority;
 import io.openems.edge.ess.api.ManagedSymmetricEss;
 import io.openems.edge.ess.api.SymmetricEss;
-import io.openems.edge.ess.power.api.Power;
 import io.openems.edge.ess.power.api.Constraint;
 import io.openems.edge.ess.power.api.Phase;
+import io.openems.edge.ess.power.api.Power;
 import io.openems.edge.ess.power.api.Pwr;
 import io.openems.edge.ess.power.api.Relationship;
 import org.osgi.service.cm.ConfigurationAdmin;
@@ -33,6 +33,8 @@ import org.osgi.service.event.EventHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.Map;
 
 public class EssSocomecPmsImpl extends AbstractOpenemsSunSpecComponent implements EssSocomecPms,
@@ -44,6 +46,9 @@ public class EssSocomecPmsImpl extends AbstractOpenemsSunSpecComponent implement
 
   @Reference
   private ConfigurationAdmin cm;
+
+  private int alarmCount;
+  private Instant lastAlarmTime;
 
   public static final ElementToChannelConverter GRID_MODE_CONVERTER = new ElementToChannelConverter(
       // element -> channel
@@ -188,6 +193,7 @@ public class EssSocomecPmsImpl extends AbstractOpenemsSunSpecComponent implement
     this.channel(EssSocomecPms.ChannelId.STATUS).onUpdate(v -> {
       switch ((Status) v.asEnum()) {
         case OFF -> {
+          this.alarmCount = 0;
           this.channel(EssSocomecPms.ChannelId.BATTERY_CONTROL).setNextValue(Control.ON);
           this.channel(EssSocomecPms.ChannelId.SET_OPERATION).setNextValue(SetOperation.START);
         }
@@ -197,17 +203,34 @@ public class EssSocomecPmsImpl extends AbstractOpenemsSunSpecComponent implement
           this.channel(EssSocomecPms.ChannelId.REACTIVE_POWER_CONTROL).setNextValue(Control.ON);
           this.channel(EssSocomecPms.ChannelId.REACTIVE_POWER_MODE).setNextValue(PowerMode.VARS);
         }
-        // TODO handle FAULT state
         default -> {
         }
       }
     });
   }
 
+  private void recoverAlarm() {
+    if (Duration.between(this.lastAlarmTime, Instant.now()).toSeconds() > Duration.ofSeconds(30).toSeconds()) {
+      Status s = this.channel(EssSocomecPms.ChannelId.STATUS).getNextValue().asEnum();
+      if (s.equals(Status.FAULT)) {
+        getSunSpecChannel(SocomecSunspecModel.S64901.SW2).ifPresent(channel -> {
+          if (!channel.getNextValue().asEnum().equals(SocomecSunspecModel.S64901_SW2.PCS_DRYING_IN_PROGRESS) && this.alarmCount < 3) {
+            getSunSpecChannel(DefaultSunSpecModel.S715.ALARM_RESET).ifPresent(c -> {
+              c.setNextValue(1);
+              this.lastAlarmTime = Instant.now();
+              this.alarmCount++;
+            });
+          }
+        });
+      }
+    }
+  }
+
   @Override
   public void handleEvent(Event event) {
     switch (event.getTopic()) {
       case EdgeEventConstants.TOPIC_CYCLE_EXECUTE_WRITE -> this.setHeartbeat();
+      case EdgeEventConstants.TOPIC_CYCLE_BEFORE_WRITE -> this.recoverAlarm();
     }
   }
 
