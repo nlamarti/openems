@@ -272,7 +272,7 @@ public class EssSocomecPmsImpl extends AbstractOpenemsSunSpecComponent implement
         this.createPowerConstraint("PMS not running", Phase.ALL, Pwr.ACTIVE, Relationship.EQUALS, 0),
         this.createPowerConstraint("PMS not running", Phase.ALL, Pwr.REACTIVE, Relationship.EQUALS, 0)
     };
-    Status status = this.channel(EssSocomecPms.ChannelId.STATUS).value().asEnum();
+    Status status = this.channel(EssSocomecPms.ChannelId.STATUS).getNextValue().asEnum();
     switch (status) {
       case THROTTLED, RUNNING -> {
         return Power.NO_CONSTRAINTS;
