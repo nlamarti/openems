@@ -1,20 +1,5 @@
 package io.openems.edge.bridge.modbus.sunspec;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Optional;
-import java.util.Set;
-import java.util.concurrent.CompletableFuture;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import org.osgi.service.cm.ConfigurationAdmin;
-import org.osgi.service.component.ComponentContext;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import io.openems.common.exceptions.OpenemsException;
 import io.openems.edge.bridge.modbus.api.AbstractOpenemsModbusComponent;
 import io.openems.edge.bridge.modbus.api.ElementToChannelConverter;
@@ -30,12 +15,28 @@ import io.openems.edge.bridge.modbus.api.task.FC3ReadRegistersTask;
 import io.openems.edge.bridge.modbus.api.task.Task;
 import io.openems.edge.common.channel.Channel;
 import io.openems.edge.common.taskmanager.Priority;
+import org.osgi.service.cm.ConfigurationAdmin;
+import org.osgi.service.component.ComponentContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Optional;
+import java.util.Set;
+import java.util.concurrent.CompletableFuture;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 /**
  * This class provides a generic implementation of SunSpec ModBus protocols.
  */
 public abstract class AbstractOpenemsSunSpecComponent extends AbstractOpenemsModbusComponent {
-
+	private static final int MAXIMUM_TASK_LENGTH = 126;
 	private final Logger log = LoggerFactory.getLogger(AbstractOpenemsSunSpecComponent.class);
 
 	// The active SunSpec-Models and their reading-priority
@@ -341,9 +342,16 @@ public abstract class AbstractOpenemsSunSpecComponent extends AbstractOpenemsMod
 				break;
 			}
 		}
-
-		final Task readTask = new FC3ReadRegistersTask(elements[0].getStartAddress(), priority, elements);
-		this.modbusProtocol.addTask(readTask);
+		IntStream.iterate(0, i -> i + MAXIMUM_TASK_LENGTH)
+				.limit((long) Math.ceil((double) elements.length / MAXIMUM_TASK_LENGTH))
+				.mapToObj(j ->  Arrays.copyOfRange(elements, j, Math.min(j + MAXIMUM_TASK_LENGTH, elements.length)))
+				.forEach(e -> {
+					try {
+						this.modbusProtocol.addTask(new FC3ReadRegistersTask(e[0].getStartAddress(), priority, e));
+					} catch (OpenemsException ex) {
+						throw new RuntimeException(ex);
+					}
+				});
 	}
 
 	/**
