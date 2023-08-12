@@ -1,4 +1,4 @@
-  // CHECKSTYLE:OFF
+// CHECKSTYLE:OFF
 
 package io.openems.edge.bridge.modbus.sunspec;
 
@@ -15,7 +15,7 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 			"All SunSpec compliant devices must include this as the first model", //
 			"", //
 			66, //
-			DefaultSunSpecModel.S1.values(), //
+			S1.values(), //
 			SunSpecModelType.COMMON //
 	), //
 	S_2(//
@@ -23,7 +23,7 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 			"Aggregates a collection of models for a given model id", //
 			"", //
 			14, //
-			DefaultSunSpecModel.S2.values(), //
+			S2.values(), //
 			SunSpecModelType.AGGREGATOR //
 	), //
 	S_15(//
@@ -31,7 +31,7 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 			"Interface counters", //
 			"", //
 			24, //
-			DefaultSunSpecModel.S15.values(), //
+			S15.values(), //
 			SunSpecModelType.NETWORK_CONFIGURATION //
 	), //
 	S_18(//
@@ -39,7 +39,7 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 			"Include this model to support a cellular interface link", //
 			"", //
 			22, //
-			DefaultSunSpecModel.S18.values(), //
+			S18.values(), //
 			SunSpecModelType.NETWORK_CONFIGURATION //
 	), //
 	S_101(//
@@ -47,7 +47,7 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 			"Include this model for single phase inverter monitoring", //
 			"", //
 			50, //
-			DefaultSunSpecModel.S101.values(), //
+			S101.values(), //
 			SunSpecModelType.INVERTER //
 	), //
 	S_102(//
@@ -55,7 +55,7 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 			"Include this model for split phase inverter monitoring", //
 			"", //
 			50, //
-			DefaultSunSpecModel.S102.values(), //
+			S102.values(), //
 			SunSpecModelType.INVERTER //
 	), //
 	S_103(//
@@ -63,7 +63,7 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 			"Include this model for three phase inverter monitoring", //
 			"", //
 			50, //
-			DefaultSunSpecModel.S103.values(), //
+			S103.values(), //
 			SunSpecModelType.INVERTER //
 	), //
 	S_111(//
@@ -71,7 +71,7 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 			"Include this model for single phase inverter monitoring using float values", //
 			"", //
 			60, //
-			DefaultSunSpecModel.S111.values(), //
+			S111.values(), //
 			SunSpecModelType.INVERTER //
 	), //
 	S_112(//
@@ -79,7 +79,7 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 			"Include this model for split phase inverter monitoring using float values", //
 			"", //
 			60, //
-			DefaultSunSpecModel.S112.values(), //
+			S112.values(), //
 			SunSpecModelType.INVERTER //
 	), //
 	S_113(//
@@ -87,7 +87,7 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 			"Include this model for three phase inverter monitoring using float values", //
 			"", //
 			60, //
-			DefaultSunSpecModel.S113.values(), //
+			S113.values(), //
 			SunSpecModelType.INVERTER //
 	), //
 	S_120(//
@@ -95,7 +95,7 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 			"Inverter Controls Nameplate Ratings", //
 			"", //
 			26, //
-			DefaultSunSpecModel.S120.values(), //
+			S120.values(), //
 			SunSpecModelType.INVERTER //
 	), //
 	S_121(//
@@ -103,7 +103,7 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 			"Inverter Controls Basic Settings", //
 			"", //
 			30, //
-			DefaultSunSpecModel.S121.values(), //
+			S121.values(), //
 			SunSpecModelType.INVERTER //
 	), //
 	S_122(//
@@ -111,7 +111,7 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 			"Inverter Controls Extended Measurements and Status", //
 			"", //
 			44, //
-			DefaultSunSpecModel.S122.values(), //
+			S122.values(), //
 			SunSpecModelType.INVERTER //
 	), //
 	S_123(//
@@ -119,7 +119,7 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 			"Immediate Inverter Controls", //
 			"", //
 			24, //
-			DefaultSunSpecModel.S123.values(), //
+			S123.values(), //
 			SunSpecModelType.INVERTER //
 	), //
 	S_124(//
@@ -127,7 +127,7 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 			"Basic Storage Controls", //
 			"", //
 			24, //
-			DefaultSunSpecModel.S124.values(), //
+			S124.values(), //
 			SunSpecModelType.INVERTER //
 	), //
 	S_125(//
@@ -135,7 +135,7 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 			"Pricing Signal", //
 			"", //
 			8, //
-			DefaultSunSpecModel.S125.values(), //
+			S125.values(), //
 			SunSpecModelType.INVERTER //
 	), //
 	S_127(//
@@ -143,7 +143,7 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 			"Parameterized Frequency-Watt", //
 			"", //
 			10, //
-			DefaultSunSpecModel.S127.values(), //
+			S127.values(), //
 			SunSpecModelType.INVERTER //
 	), //
 	S_128(//
@@ -151,7 +151,7 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 			"Dynamic Reactive Current", //
 			"", //
 			14, //
-			DefaultSunSpecModel.S128.values(), //
+			S128.values(), //
 			SunSpecModelType.INVERTER //
 	), //
 	S_145(//
@@ -159,7 +159,7 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 			"Inverter controls extended settings", //
 			"", //
 			8, //
-			DefaultSunSpecModel.S145.values(), //
+			S145.values(), //
 			SunSpecModelType.INVERTER //
 	), //
 	S_201(//
@@ -167,7 +167,7 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 			"Include this model for single phase (AN or AB) metering", //
 			"", //
 			105, //
-			DefaultSunSpecModel.S201.values(), //
+			S201.values(), //
 			SunSpecModelType.METER //
 	), //
 	S_202(//
@@ -175,7 +175,7 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 			"", //
 			"", //
 			105, //
-			DefaultSunSpecModel.S202.values(), //
+			S202.values(), //
 			SunSpecModelType.METER //
 	), //
 	S_203(//
@@ -183,7 +183,7 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 			"", //
 			"", //
 			105, //
-			DefaultSunSpecModel.S203.values(), //
+			S203.values(), //
 			SunSpecModelType.METER //
 	), //
 	S_204(//
@@ -191,39 +191,15 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 			"", //
 			"", //
 			105, //
-			DefaultSunSpecModel.S204.values(), //
+			S204.values(), //
 			SunSpecModelType.METER //
-	), //
-	S_302(//
-			"Irradiance Model", //
-			"Include to support various irradiance measurements", //
-			"", //
-			0, //
-			DefaultSunSpecModel.S302.values(), //
-			SunSpecModelType.ENVIRONMENTAL //
-	), //
-	S_303(//
-			"Back of Module Temperature Model", //
-			"Include to support variable number of  back of module temperature measurements", //
-			"", //
-			0, //
-			DefaultSunSpecModel.S303.values(), //
-			SunSpecModelType.ENVIRONMENTAL //
-	), //
-	S_304(//
-			"Inclinometer Model", //
-			"Include to support orientation measurements", //
-			"", //
-			0, //
-			DefaultSunSpecModel.S304.values(), //
-			SunSpecModelType.ENVIRONMENTAL //
 	), //
 	S_305(//
 			"GPS", //
 			"Include to support location measurements", //
 			"", //
 			36, //
-			DefaultSunSpecModel.S305.values(), //
+			S305.values(), //
 			SunSpecModelType.ENVIRONMENTAL //
 	), //
 	S_306(//
@@ -231,7 +207,7 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 			"Include to support a standard reference point", //
 			"", //
 			4, //
-			DefaultSunSpecModel.S306.values(), //
+			S306.values(), //
 			SunSpecModelType.ENVIRONMENTAL //
 	), //
 	S_307(//
@@ -239,7 +215,7 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 			"Base Meteorological Model", //
 			"", //
 			11, //
-			DefaultSunSpecModel.S307.values(), //
+			S307.values(), //
 			SunSpecModelType.ENVIRONMENTAL //
 	), //
 	S_308(//
@@ -247,7 +223,7 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 			"Include to support a few basic measurements", //
 			"", //
 			4, //
-			DefaultSunSpecModel.S308.values(), //
+			S308.values(), //
 			SunSpecModelType.ENVIRONMENTAL //
 	), //
 	S_701(//
@@ -255,7 +231,7 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 			"DER AC measurement model.", //
 			"", //
 			153, //
-			DefaultSunSpecModel.S701.values(), //
+			S701.values(), //
 			SunSpecModelType.RESERVED_1 //
 	), //
 	S_702(//
@@ -263,7 +239,7 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 			"DER capacity model.", //
 			"", //
 			50, //
-			DefaultSunSpecModel.S702.values(), //
+			S702.values(), //
 			SunSpecModelType.RESERVED_1 //
 	), //
 	S_703(//
@@ -271,7 +247,7 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 			"Enter service model.", //
 			"", //
 			17, //
-			DefaultSunSpecModel.S703.values(), //
+			S703.values(), //
 			SunSpecModelType.RESERVED_1 //
 	), //
 	S_704(//
@@ -279,7 +255,7 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 			"DER AC controls model.", //
 			"", //
 			57, //
-			DefaultSunSpecModel.S704.values(), //
+			S704.values(), //
 			SunSpecModelType.RESERVED_1 //
 	), //
 	S_705(//
@@ -287,7 +263,7 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 			"DER Volt-Var model.", //
 			"", //
 			13, //
-			DefaultSunSpecModel.S705.values(), //
+			S705.values(), //
 			SunSpecModelType.RESERVED_1 //
 	), //
 	S_706(//
@@ -295,7 +271,7 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 			"DER Volt-Watt model.", //
 			"", //
 			13, //
-			DefaultSunSpecModel.S706.values(), //
+			S706.values(), //
 			SunSpecModelType.RESERVED_1 //
 	), //
 	S_707(//
@@ -303,7 +279,7 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 			"DER low voltage trip model.", //
 			"", //
 			7, //
-			DefaultSunSpecModel.S707.values(), //
+			S707.values(), //
 			SunSpecModelType.RESERVED_1 //
 	), //
 	S_708(//
@@ -311,7 +287,7 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 			"DER high voltage trip model.", //
 			"", //
 			7, //
-			DefaultSunSpecModel.S708.values(), //
+			S708.values(), //
 			SunSpecModelType.RESERVED_1 //
 	), //
 	S_709(//
@@ -319,7 +295,7 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 			"DER low frequency trip model.", //
 			"", //
 			7, //
-			DefaultSunSpecModel.S709.values(), //
+			S709.values(), //
 			SunSpecModelType.RESERVED_1 //
 	), //
 	S_710(//
@@ -327,7 +303,7 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 			"DER high frequency trip model.", //
 			"", //
 			7, //
-			DefaultSunSpecModel.S710.values(), //
+			S710.values(), //
 			SunSpecModelType.RESERVED_1 //
 	), //
 	S_711(//
@@ -335,7 +311,7 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 			"DER Frequency Droop model.", //
 			"", //
 			12, //
-			DefaultSunSpecModel.S711.values(), //
+			S711.values(), //
 			SunSpecModelType.RESERVED_1 //
 	), //
 	S_712(//
@@ -343,7 +319,7 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 			"DER Watt-Var model.", //
 			"", //
 			12, //
-			DefaultSunSpecModel.S712.values(), //
+			S712.values(), //
 			SunSpecModelType.RESERVED_1 //
 	), //
 	S_713(//
@@ -351,7 +327,7 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 			"DER storage capacity.", //
 			"", //
 			7, //
-			DefaultSunSpecModel.S713.values(), //
+			S713.values(), //
 			SunSpecModelType.RESERVED_1 //
 	), //
 	S_714(//
@@ -359,7 +335,7 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 			"DER DC measurement.", //
 			"", //
 			18, //
-			DefaultSunSpecModel.S714.values(), //
+			S714.values(), //
 			SunSpecModelType.RESERVED_1 //
 	), //
 	S_715(//
@@ -367,7 +343,7 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 			"DER Control", //
 			"", //
 			7, //
-			DefaultSunSpecModel.S715.values(), //
+			S715.values(), //
 			SunSpecModelType.RESERVED_1 //
 	), //
 	S_801(//
@@ -375,7 +351,7 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 			"This model has been deprecated.", //
 			"", //
 			1, //
-			DefaultSunSpecModel.S801.values(), //
+			S801.values(), //
 			SunSpecModelType.STORAGE //
 	), //
 	S_802(//
@@ -383,7 +359,7 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 			"", //
 			"", //
 			62, //
-			DefaultSunSpecModel.S802.values(), //
+			S802.values(), //
 			SunSpecModelType.STORAGE //
 	), //
 	S_64001(//
@@ -391,7 +367,7 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 			"", //
 			"", //
 			71, //
-			DefaultSunSpecModel.S64001.values(), //
+			S64001.values(), //
 			SunSpecModelType.VENDOR_SPECIFIC //
 	), //
 	S_64101(//
@@ -399,7 +375,7 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 			"", //
 			"", //
 			7, //
-			DefaultSunSpecModel.S64101.values(), //
+			S64101.values(), //
 			SunSpecModelType.VENDOR_SPECIFIC //
 	), //
 	S_64110(//
@@ -407,7 +383,7 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 			"", //
 			"", //
 			282, //
-			DefaultSunSpecModel.S64110.values(), //
+			S64110.values(), //
 			SunSpecModelType.VENDOR_SPECIFIC //
 	), //
 	S_64111(//
@@ -415,7 +391,7 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 			"", //
 			"", //
 			23, //
-			DefaultSunSpecModel.S64111.values(), //
+			S64111.values(), //
 			SunSpecModelType.VENDOR_SPECIFIC //
 	), //
 	S_64112(//
@@ -423,33 +399,11 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 			"", //
 			"", //
 			64, //
-			DefaultSunSpecModel.S64112.values(), //
+			S64112.values(), //
 			SunSpecModelType.VENDOR_SPECIFIC //
 	); //
 
 	public static enum S1 implements SunSpecPoint {
-		ID(new PointImpl(//
-				"S1_ID", //
-				"Model ID", //
-				"Model identifier", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
-		L(new PointImpl(//
-				"S1_L", //
-				"Model Length", //
-				"Model length", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
 		MN(new PointImpl(//
 				"S1_MN", //
 				"Manufacturer", //
@@ -541,28 +495,6 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 	}
 
 	public static enum S2 implements SunSpecPoint {
-		ID(new PointImpl(//
-				"S2_ID", //
-				"Model ID", //
-				"Model identifier", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
-		L(new PointImpl(//
-				"S2_L", //
-				"Model Length", //
-				"Model length", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
 		AID(new PointImpl(//
 				"S2_AID", //
 				"AID", //
@@ -703,12 +635,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -751,12 +683,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -783,12 +715,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -798,28 +730,6 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 	}
 
 	public static enum S15 implements SunSpecPoint {
-		ID(new PointImpl(//
-				"S15_ID", //
-				"Model ID", //
-				"Model identifier", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
-		L(new PointImpl(//
-				"S15_L", //
-				"Model Length", //
-				"Model length", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
 		CLR(new PointImpl(//
 				"S15_CLR", //
 				"Clear", //
@@ -977,28 +887,6 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 	}
 
 	public static enum S18 implements SunSpecPoint {
-		ID(new PointImpl(//
-				"S18_ID", //
-				"Model ID", //
-				"Model identifier", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
-		L(new PointImpl(//
-				"S18_L", //
-				"Model Length", //
-				"Model length", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
 		NAM(new PointImpl(//
 				"S18_NAM", //
 				"Name", //
@@ -1068,28 +956,6 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 	}
 
 	public static enum S101 implements SunSpecPoint {
-		ID(new PointImpl(//
-				"S101_ID", //
-				"Model ID", //
-				"Model identifier", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
-		L(new PointImpl(//
-				"S101_L", //
-				"Model Length", //
-				"Model length", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
 		A(new PointImpl(//
 				"S101_A", //
 				"Amps", //
@@ -1597,12 +1463,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -1640,12 +1506,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -1655,28 +1521,6 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 	}
 
 	public static enum S102 implements SunSpecPoint {
-		ID(new PointImpl(//
-				"S102_ID", //
-				"Model ID", //
-				"Model identifier", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
-		L(new PointImpl(//
-				"S102_L", //
-				"Model Length", //
-				"Model length", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
 		A(new PointImpl(//
 				"S102_A", //
 				"Amps", //
@@ -2184,12 +2028,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -2227,12 +2071,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -2242,28 +2086,6 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 	}
 
 	public static enum S103 implements SunSpecPoint {
-		ID(new PointImpl(//
-				"S103_ID", //
-				"Model ID", //
-				"Model identifier", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
-		L(new PointImpl(//
-				"S103_L", //
-				"Model Length", //
-				"Model length", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
 		A(new PointImpl(//
 				"S103_A", //
 				"Amps", //
@@ -2771,12 +2593,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -2814,12 +2636,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -2829,28 +2651,6 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 	}
 
 	public static enum S111 implements SunSpecPoint {
-		ID(new PointImpl(//
-				"S111_ID", //
-				"Model ID", //
-				"Model identifier", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
-		L(new PointImpl(//
-				"S111_L", //
-				"Model Length", //
-				"Model length", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
 		A(new PointImpl(//
 				"S111_A", //
 				"Amps", //
@@ -3226,12 +3026,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -3269,12 +3069,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -3284,28 +3084,6 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 	}
 
 	public static enum S112 implements SunSpecPoint {
-		ID(new PointImpl(//
-				"S112_ID", //
-				"Model ID", //
-				"Model identifier", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
-		L(new PointImpl(//
-				"S112_L", //
-				"Model Length", //
-				"Model length", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
 		A(new PointImpl(//
 				"S112_A", //
 				"Amps", //
@@ -3681,12 +3459,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -3724,12 +3502,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -3739,28 +3517,6 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 	}
 
 	public static enum S113 implements SunSpecPoint {
-		ID(new PointImpl(//
-				"S113_ID", //
-				"Model ID", //
-				"Model identifier", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
-		L(new PointImpl(//
-				"S113_L", //
-				"Model Length", //
-				"Model length", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
 		A(new PointImpl(//
 				"S113_A", //
 				"Amps", //
@@ -4136,12 +3892,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -4179,12 +3935,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -4194,28 +3950,6 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 	}
 
 	public static enum S120 implements SunSpecPoint {
-		ID(new PointImpl(//
-				"S120_ID", //
-				"Model ID", //
-				"Model identifier", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
-		L(new PointImpl(//
-				"S120_L", //
-				"Model Length", //
-				"Model length", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
 		D_E_R_TYP(new PointImpl(//
 				"S120_D_E_R_TYP", //
 				"DERTyp", //
@@ -4530,12 +4264,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -4545,28 +4279,6 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 	}
 
 	public static enum S121 implements SunSpecPoint {
-		ID(new PointImpl(//
-				"S121_ID", //
-				"Model ID", //
-				"Model identifier", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
-		L(new PointImpl(//
-				"S121_L", //
-				"Model Length", //
-				"Model length", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
 		W_MAX(new PointImpl(//
 				"S121_W_MAX", //
 				"WMax", //
@@ -4925,12 +4637,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -4954,12 +4666,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -4984,12 +4696,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -4999,28 +4711,6 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 	}
 
 	public static enum S122 implements SunSpecPoint {
-		ID(new PointImpl(//
-				"S122_ID", //
-				"Model ID", //
-				"Model identifier", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
-		L(new PointImpl(//
-				"S122_L", //
-				"Model Length", //
-				"Model length", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
 		P_V_CONN(new PointImpl(//
 				"S122_P_V_CONN", //
 				"PVConn", //
@@ -5271,12 +4961,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -5302,12 +4992,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -5330,12 +5020,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -5368,12 +5058,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -5409,12 +5099,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -5440,12 +5130,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -5455,28 +5145,6 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 	}
 
 	public static enum S123 implements SunSpecPoint {
-		ID(new PointImpl(//
-				"S123_ID", //
-				"Model ID", //
-				"Model identifier", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
-		L(new PointImpl(//
-				"S123_L", //
-				"Model Length", //
-				"Model length", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
 		CONN_WIN_TMS(new PointImpl(//
 				"S123_CONN_WIN_TMS", //
 				"Conn_WinTms", //
@@ -5769,12 +5437,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -5798,12 +5466,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -5827,12 +5495,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -5858,12 +5526,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -5887,12 +5555,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -5902,28 +5570,6 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 	}
 
 	public static enum S124 implements SunSpecPoint {
-		ID(new PointImpl(//
-				"S124_ID", //
-				"Model ID", //
-				"Model identifier", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
-		L(new PointImpl(//
-				"S124_L", //
-				"Model Length", //
-				"Model length", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
 		W_CHA_MAX(new PointImpl(//
 				"S124_W_CHA_MAX", //
 				"WChaMax", //
@@ -6216,12 +5862,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -6250,12 +5896,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -6279,12 +5925,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -6294,28 +5940,6 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 	}
 
 	public static enum S125 implements SunSpecPoint {
-		ID(new PointImpl(//
-				"S125_ID", //
-				"Model ID", //
-				"Model identifier", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
-		L(new PointImpl(//
-				"S125_L", //
-				"Model Length", //
-				"Model length", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
 		MOD_ENA(new PointImpl(//
 				"S125_MOD_ENA", //
 				"ModEna", //
@@ -6431,12 +6055,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -6463,12 +6087,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -6478,28 +6102,6 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 	}
 
 	public static enum S127 implements SunSpecPoint {
-		ID(new PointImpl(//
-				"S127_ID", //
-				"Model ID", //
-				"Model identifier", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
-		L(new PointImpl(//
-				"S127_L", //
-				"Model Length", //
-				"Model length", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
 		W_GRA(new PointImpl(//
 				"S127_W_GRA", //
 				"WGra", //
@@ -6637,12 +6239,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -6665,12 +6267,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -6680,28 +6282,6 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 	}
 
 	public static enum S128 implements SunSpecPoint {
-		ID(new PointImpl(//
-				"S128_ID", //
-				"Model ID", //
-				"Model identifier", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
-		L(new PointImpl(//
-				"S128_L", //
-				"Model Length", //
-				"Model length", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
 		AR_GRA_MOD(new PointImpl(//
 				"S128_AR_GRA_MOD", //
 				"ArGraMod", //
@@ -6884,12 +6464,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -6912,12 +6492,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -6927,28 +6507,6 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 	}
 
 	public static enum S145 implements SunSpecPoint {
-		ID(new PointImpl(//
-				"S145_ID", //
-				"Model ID", //
-				"Model identifier", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
-		L(new PointImpl(//
-				"S145_L", //
-				"Model Length", //
-				"Model length", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
 		NOM_RMP_UP_RTE(new PointImpl(//
 				"S145_NOM_RMP_UP_RTE", //
 				"Ramp Up Rate", //
@@ -7051,28 +6609,6 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 	}
 
 	public static enum S201 implements SunSpecPoint {
-		ID(new PointImpl(//
-				"S201_ID", //
-				"Model ID", //
-				"Model identifier", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
-		L(new PointImpl(//
-				"S201_L", //
-				"Model Length", //
-				"Model length", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
 		A(new PointImpl(//
 				"S201_A", //
 				"Amps", //
@@ -7912,12 +7448,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -7927,28 +7463,6 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 	}
 
 	public static enum S202 implements SunSpecPoint {
-		ID(new PointImpl(//
-				"S202_ID", //
-				"Model ID", //
-				"Model identifier", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
-		L(new PointImpl(//
-				"S202_L", //
-				"Model Length", //
-				"Model length", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
 		A(new PointImpl(//
 				"S202_A", //
 				"Amps", //
@@ -8796,12 +8310,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -8811,28 +8325,6 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 	}
 
 	public static enum S203 implements SunSpecPoint {
-		ID(new PointImpl(//
-				"S203_ID", //
-				"Model ID", //
-				"Model identifier", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
-		L(new PointImpl(//
-				"S203_L", //
-				"Model Length", //
-				"Model length", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
 		A(new PointImpl(//
 				"S203_A", //
 				"Amps", //
@@ -9680,12 +9172,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -9695,28 +9187,6 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 	}
 
 	public static enum S204 implements SunSpecPoint {
-		ID(new PointImpl(//
-				"S204_ID", //
-				"Model ID", //
-				"Model identifier", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
-		L(new PointImpl(//
-				"S204_L", //
-				"Model Length", //
-				"Model length", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
 		A(new PointImpl(//
 				"S204_A", //
 				"Amps", //
@@ -10564,12 +10034,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -10578,137 +10048,7 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 		}
 	}
 
-	public static enum S302 implements SunSpecPoint {
-		ID(new PointImpl(//
-				"S302_ID", //
-				"Model ID", //
-				"Model identifier", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
-		L(new PointImpl(//
-				"S302_L", //
-				"Model Length", //
-				"Model length", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])); //
-
-		protected final PointImpl impl;
-
-		private S302(PointImpl impl) {
-			this.impl = impl;
-		}
-
-		@Override
-		public PointImpl get() {
-			return this.impl;
-		}
-	}
-
-	public static enum S303 implements SunSpecPoint {
-		ID(new PointImpl(//
-				"S303_ID", //
-				"Model ID", //
-				"Model identifier", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
-		L(new PointImpl(//
-				"S303_L", //
-				"Model Length", //
-				"Model length", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])); //
-
-		protected final PointImpl impl;
-
-		private S303(PointImpl impl) {
-			this.impl = impl;
-		}
-
-		@Override
-		public PointImpl get() {
-			return this.impl;
-		}
-	}
-
-	public static enum S304 implements SunSpecPoint {
-		ID(new PointImpl(//
-				"S304_ID", //
-				"Model ID", //
-				"Model identifier", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
-		L(new PointImpl(//
-				"S304_L", //
-				"Model Length", //
-				"Model length", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])); //
-
-		protected final PointImpl impl;
-
-		private S304(PointImpl impl) {
-			this.impl = impl;
-		}
-
-		@Override
-		public PointImpl get() {
-			return this.impl;
-		}
-	}
-
 	public static enum S305 implements SunSpecPoint {
-		ID(new PointImpl(//
-				"S305_ID", //
-				"Model ID", //
-				"Model identifier", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
-		L(new PointImpl(//
-				"S305_L", //
-				"Model Length", //
-				"Model length", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
 		TM(new PointImpl(//
 				"S305_TM", //
 				"Tm", //
@@ -10789,28 +10129,6 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 	}
 
 	public static enum S306 implements SunSpecPoint {
-		ID(new PointImpl(//
-				"S306_ID", //
-				"Model ID", //
-				"Model identifier", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
-		L(new PointImpl(//
-				"S306_L", //
-				"Model Length", //
-				"Model length", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
 		GHI(new PointImpl(//
 				"S306_GHI", //
 				"GHI", //
@@ -10869,28 +10187,6 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 	}
 
 	public static enum S307 implements SunSpecPoint {
-		ID(new PointImpl(//
-				"S307_ID", //
-				"Model ID", //
-				"Model identifier", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
-		L(new PointImpl(//
-				"S307_L", //
-				"Model Length", //
-				"Model length", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
 		TMP_AMB(new PointImpl(//
 				"S307_TMP_AMB", //
 				"Ambient Temperature", //
@@ -11026,28 +10322,6 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 	}
 
 	public static enum S308 implements SunSpecPoint {
-		ID(new PointImpl(//
-				"S308_ID", //
-				"Model ID", //
-				"Model identifier", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
-		L(new PointImpl(//
-				"S308_L", //
-				"Model Length", //
-				"Model length", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
 		GHI(new PointImpl(//
 				"S308_GHI", //
 				"GHI", //
@@ -11106,28 +10380,6 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 	}
 
 	public static enum S701 implements SunSpecPoint {
-		ID(new PointImpl(//
-				"S701_ID", //
-				"Model ID", //
-				"DER AC measurement model ID.", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
-		L(new PointImpl(//
-				"S701_L", //
-				"Model Length", //
-				"DER AC measurement model length.", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
 		A_C_TYPE(new PointImpl(//
 				"S701_A_C_TYPE", //
 				"AC Wiring Type", //
@@ -11927,12 +11179,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -11956,12 +11208,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -11991,12 +11243,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -12020,12 +11272,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -12064,12 +11316,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -12094,12 +11346,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -12136,12 +11388,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -12151,28 +11403,6 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 	}
 
 	public static enum S702 implements SunSpecPoint {
-		ID(new PointImpl(//
-				"S702_ID", //
-				"Model ID", //
-				"DER capacity model ID.", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
-		L(new PointImpl(//
-				"S702_L", //
-				"Model Length", //
-				"DER capacity model length.", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
 		W_MAX_RTG(new PointImpl(//
 				"S702_W_MAX_RTG", //
 				"Active Power Max Rating", //
@@ -12740,12 +11970,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -12770,12 +12000,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -12811,12 +12041,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -12842,12 +12072,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -12873,12 +12103,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -12888,28 +12118,6 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 	}
 
 	public static enum S703 implements SunSpecPoint {
-		ID(new PointImpl(//
-				"S703_ID", //
-				"Model ID", //
-				"Enter service model ID.", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
-		L(new PointImpl(//
-				"S703_L", //
-				"Model Length", //
-				"Enter service model length.", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
 		ES(new PointImpl(//
 				"S703_ES", //
 				"Permit Enter Service", //
@@ -13059,12 +12267,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -13074,28 +12282,6 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 	}
 
 	public static enum S704 implements SunSpecPoint {
-		ID(new PointImpl(//
-				"S704_ID", //
-				"Model ID", //
-				"DER AC controls model ID.", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
-		L(new PointImpl(//
-				"S704_L", //
-				"Model Length", //
-				"DER AC controls model length.", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
 		P_F_W_INJ_ENA(new PointImpl(//
 				"S704_P_F_W_INJ_ENA", //
 				"Power Factor Enable (W Inj) Enable", //
@@ -13597,12 +12783,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -13626,12 +12812,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -13655,12 +12841,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -13684,12 +12870,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -13713,12 +12899,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -13742,12 +12928,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -13771,12 +12957,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -13800,12 +12986,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -13829,12 +13015,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -13858,12 +13044,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -13890,12 +13076,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -13920,12 +13106,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -13949,12 +13135,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -13978,12 +13164,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -14007,12 +13193,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -14022,28 +13208,6 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 	}
 
 	public static enum S705 implements SunSpecPoint {
-		ID(new PointImpl(//
-				"S705_ID", //
-				"Model ID", //
-				"DER Volt-Var model ID.", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
-		L(new PointImpl(//
-				"S705_L", //
-				"Model Length", //
-				"DER Volt-Var model length.", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
 		ENA(new PointImpl(//
 				"S705_ENA", //
 				"DER Volt-Var Module Enable", //
@@ -14193,12 +13357,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -14223,12 +13387,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -14238,28 +13402,6 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 	}
 
 	public static enum S706 implements SunSpecPoint {
-		ID(new PointImpl(//
-				"S706_ID", //
-				"Model ID", //
-				"DER Volt-Watt model ID.", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
-		L(new PointImpl(//
-				"S706_L", //
-				"Model Length", //
-				"DER Volt-Watt model length.", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
 		ENA(new PointImpl(//
 				"S706_ENA", //
 				"DER Volt-Watt Module Enable", //
@@ -14409,12 +13551,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -14439,12 +13581,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -14454,28 +13596,6 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 	}
 
 	public static enum S707 implements SunSpecPoint {
-		ID(new PointImpl(//
-				"S707_ID", //
-				"Model ID", //
-				"DER low voltage trip model ID.", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
-		L(new PointImpl(//
-				"S707_L", //
-				"Model Length", //
-				"DER low voltage trip model length.", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
 		ENA(new PointImpl(//
 				"S707_ENA", //
 				"DER Trip LV Module Enable", //
@@ -14581,12 +13701,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -14611,12 +13731,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -14626,28 +13746,6 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 	}
 
 	public static enum S708 implements SunSpecPoint {
-		ID(new PointImpl(//
-				"S708_ID", //
-				"Model ID", //
-				"DER high voltage trip model ID.", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
-		L(new PointImpl(//
-				"S708_L", //
-				"Model Length", //
-				"DER high voltage trip model length.", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
 		ENA(new PointImpl(//
 				"S708_ENA", //
 				"DER Trip HV Module Enable", //
@@ -14753,12 +13851,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -14783,12 +13881,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -14798,28 +13896,6 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 	}
 
 	public static enum S709 implements SunSpecPoint {
-		ID(new PointImpl(//
-				"S709_ID", //
-				"Model ID", //
-				"DER low frequency trip model ID.", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
-		L(new PointImpl(//
-				"S709_L", //
-				"Model Length", //
-				"DER low frequency trip model length.", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
 		ENA(new PointImpl(//
 				"S709_ENA", //
 				"DER Trip LF Module Enable", //
@@ -14925,12 +14001,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -14955,12 +14031,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -14970,28 +14046,6 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 	}
 
 	public static enum S710 implements SunSpecPoint {
-		ID(new PointImpl(//
-				"S710_ID", //
-				"Model ID", //
-				"DER high frequency trip model ID.", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
-		L(new PointImpl(//
-				"S710_L", //
-				"Model Length", //
-				"DER high frequency trip model length.", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
 		ENA(new PointImpl(//
 				"S710_ENA", //
 				"DER Trip HF Module Enable", //
@@ -15097,12 +14151,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -15127,12 +14181,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -15142,28 +14196,6 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 	}
 
 	public static enum S711 implements SunSpecPoint {
-		ID(new PointImpl(//
-				"S711_ID", //
-				"Model ID", //
-				"DER Frequency Droop model ID.", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
-		L(new PointImpl(//
-				"S711_L", //
-				"Model Length", //
-				"DER Frequency Droop model length.", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
 		ENA(new PointImpl(//
 				"S711_ENA", //
 				"DER Frequency Droop Module Enable", //
@@ -15302,12 +14334,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -15332,12 +14364,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -15347,28 +14379,6 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 	}
 
 	public static enum S712 implements SunSpecPoint {
-		ID(new PointImpl(//
-				"S712_ID", //
-				"Model ID", //
-				"DER Watt-Var model ID.", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
-		L(new PointImpl(//
-				"S712_L", //
-				"Model Length", //
-				"DER Watt-Var model length.", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
 		ENA(new PointImpl(//
 				"S712_ENA", //
 				"DER Watt-Var Module Enable", //
@@ -15507,12 +14517,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -15537,12 +14547,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -15552,28 +14562,6 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 	}
 
 	public static enum S713 implements SunSpecPoint {
-		ID(new PointImpl(//
-				"S713_ID", //
-				"Model ID", //
-				"DER storage capacity model ID.", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
-		L(new PointImpl(//
-				"S713_L", //
-				"Model Length", //
-				"DER storage capacity model length.", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
 		W_H_RTG(new PointImpl(//
 				"S713_W_H_RTG", //
 				"Energy Rating", //
@@ -15680,12 +14668,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -15695,28 +14683,6 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 	}
 
 	public static enum S714 implements SunSpecPoint {
-		ID(new PointImpl(//
-				"S714_ID", //
-				"Model ID", //
-				"DER DC measurement model ID.", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
-		L(new PointImpl(//
-				"S714_L", //
-				"Model Length", //
-				"DER DC measurement model length.", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
 		PRT_ALRMS(new PointImpl(//
 				"S714_PRT_ALRMS", //
 				"Port Alarms", //
@@ -15852,28 +14818,6 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 	}
 
 	public static enum S715 implements SunSpecPoint {
-		ID(new PointImpl(//
-				"S715_ID", //
-				"Model ID", //
-				"DER control model ID.", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
-		L(new PointImpl(//
-				"S715_L", //
-				"Model Length", //
-				"DER control model length.", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
 		LOC_REM_CTL(new PointImpl(//
 				"S715_LOC_REM_CTL", //
 				"Control Mode", //
@@ -15957,12 +14901,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -15988,12 +14932,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -16003,28 +14947,6 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 	}
 
 	public static enum S801 implements SunSpecPoint {
-		ID(new PointImpl(//
-				"S801_ID", //
-				"Model ID", //
-				"Model identifier", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
-		L(new PointImpl(//
-				"S801_L", //
-				"Model Length", //
-				"Model length", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
 		DEPRECATED(new PointImpl(//
 				"S801_DEPRECATED", //
 				"Deprecated Model", //
@@ -16050,28 +14972,6 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 	}
 
 	public static enum S802 implements SunSpecPoint {
-		ID(new PointImpl(//
-				"S802_ID", //
-				"Model ID", //
-				"Model identifier", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
-		L(new PointImpl(//
-				"S802_L", //
-				"Model Length", //
-				"Model length", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
 		A_H_RTG(new PointImpl(//
 				"S802_A_H_RTG", //
 				"Nameplate Charge Capacity", //
@@ -16721,12 +15621,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -16750,12 +15650,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -16789,12 +15689,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -16823,12 +15723,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -16880,12 +15780,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -16910,12 +15810,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -16939,12 +15839,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -16969,12 +15869,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -16984,28 +15884,6 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 	}
 
 	public static enum S64001 implements SunSpecPoint {
-		ID(new PointImpl(//
-				"S64001_ID", //
-				"Model ID", //
-				"Model identifier", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
-		L(new PointImpl(//
-				"S64001_L", //
-				"Model Length", //
-				"Model length", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
 		CMD(new PointImpl(//
 				"S64001_CMD", //
 				"Command Code", //
@@ -17405,28 +16283,6 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 	}
 
 	public static enum S64101 implements SunSpecPoint {
-		ID(new PointImpl(//
-				"S64101_ID", //
-				"Model ID", //
-				"Model identifier", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
-		L(new PointImpl(//
-				"S64101_L", //
-				"Model Length", //
-				"Model length", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
 		ELTEK_COUNTRY_CODE(new PointImpl(//
 				"S64101_ELTEK_COUNTRY_CODE", //
 				"", //
@@ -17518,28 +16374,6 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 	}
 
 	public static enum S64110 implements SunSpecPoint {
-		ID(new PointImpl(//
-				"S64110_ID", //
-				"Model ID", //
-				"Model identifier", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
-		L(new PointImpl(//
-				"S64110_L", //
-				"Model Length", //
-				"Model length", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
 		MAJOR_F_W_REV(new PointImpl(//
 				"S64110_MAJOR_F_W_REV", //
 				"AXS Major Firmware Number", //
@@ -18085,12 +16919,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -18114,12 +16948,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -18144,12 +16978,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -18173,12 +17007,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -18188,28 +17022,6 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 	}
 
 	public static enum S64111 implements SunSpecPoint {
-		ID(new PointImpl(//
-				"S64111_ID", //
-				"Model ID", //
-				"Model identifier", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
-		L(new PointImpl(//
-				"S64111_L", //
-				"Model Length", //
-				"Model length", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
 		PORT(new PointImpl(//
 				"S64111_PORT", //
 				"Port Number", //
@@ -18494,12 +17306,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -18509,28 +17321,6 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 	}
 
 	public static enum S64112 implements SunSpecPoint {
-		ID(new PointImpl(//
-				"S64112_ID", //
-				"Model ID", //
-				"Model identifier", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
-		L(new PointImpl(//
-				"S64112_L", //
-				"Model Length", //
-				"Model length", //
-				"", //
-				PointType.UINT16, //
-				true, //
-				AccessMode.READ_ONLY, //
-				Unit.NONE, //
-				null, //
-				new OptionsEnum[0])), //
 		PORT(new PointImpl(//
 				"S64112_PORT", //
 				"Port Number", //
@@ -19264,12 +18054,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -19293,12 +18083,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -19324,12 +18114,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -19353,12 +18143,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -19382,12 +18172,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -19412,12 +18202,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -19448,12 +18238,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -19478,12 +18268,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -19507,12 +18297,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
@@ -19536,12 +18326,12 @@ public enum DefaultSunSpecModel implements SunSpecModel {
 
 		@Override
 		public int getValue() {
-			return value;
+			return this.value;
 		}
 
 		@Override
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		@Override
