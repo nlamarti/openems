@@ -2,7 +2,6 @@ package io.openems.edge.timeofusetariff.edmij;
 
 import com.google.common.collect.ImmutableSortedMap;
 import io.openems.common.exceptions.OpenemsError.OpenemsNamedException;
-import io.openems.common.utils.JsonUtils;
 import io.openems.common.utils.ThreadPoolUtils;
 import io.openems.edge.common.component.AbstractOpenemsComponent;
 import io.openems.edge.common.component.ComponentManager;
@@ -13,7 +12,10 @@ import io.openems.edge.timeofusetariff.api.utils.TimeOfUseTariffUtils;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.Route;
+import okhttp3.Response;
 import okhttp3.RequestBody;
+import okhttp3.Authenticator;
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -21,6 +23,8 @@ import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.metatype.annotations.Designate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.time.Clock;
@@ -34,78 +38,77 @@ import java.util.concurrent.atomic.AtomicReference;
 
 @Designate(ocd = Config.class, factory = true)
 @Component(//
-		name = "TimeOfUseTariff.Edmij", //
-		immediate = true, //
-		configurationPolicy = ConfigurationPolicy.REQUIRE //
+    name = "TimeOfUseTariff.Edmij", //
+    immediate = true, //
+    configurationPolicy = ConfigurationPolicy.REQUIRE //
 )
 public class TimeOfUseTariffEdmijImpl extends AbstractOpenemsComponent
-		implements TimeOfUseTariff, OpenemsComponent, TimeOfUseTariffEdmij {
+    implements TimeOfUseTariff, OpenemsComponent, TimeOfUseTariffEdmij {
 
-	private static final String EDMIJ_API_URL = "https://trading.edmij.nl";
+  private static final String EDMIJ_API_URL = "https://trading.edmij.nl";
 
-	private final ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
-	private final AtomicReference<ImmutableSortedMap<ZonedDateTime, Float>> prices = new AtomicReference<>(
-			ImmutableSortedMap.of());
+  private final ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
+  private final AtomicReference<ImmutableSortedMap<ZonedDateTime, Float>> prices = new AtomicReference<>(
+      ImmutableSortedMap.of());
 
-	@Reference
-	private ComponentManager componentManager;
+  @Reference
+  private ComponentManager componentManager;
 
-	private Config config = null;
-	private ZonedDateTime updateTimeStamp = null;
+  private Config config = null;
+  private ZonedDateTime updateTimeStamp = null;
 
-	public TimeOfUseTariffEdmijImpl() {
-		super(//
-				OpenemsComponent.ChannelId.values(), //
-				TimeOfUseTariffEdmij.ChannelId.values() //
-		);
-	}
+  private EdmijAuthRepository repository;
+  private final Logger log = LoggerFactory.getLogger(this.getClass());
 
-	@Activate
-	private void activate(ComponentContext context, Config config) {
-		super.activate(context, config.id(), config.alias(), config.enabled());
+  public TimeOfUseTariffEdmijImpl() {
+    super(//
+        OpenemsComponent.ChannelId.values(), //
+        TimeOfUseTariffEdmij.ChannelId.values() //
+    );
+  }
 
-		if (!config.enabled()) {
-			return;
-		}
-		this.config = config;
-		this.executor.schedule(this.task, 0, TimeUnit.SECONDS);
-	}
+  @Activate
+  private void activate(ComponentContext context, Config config) {
+    super.activate(context, config.id(), config.alias(), config.enabled());
 
-	@Override
-	@Deactivate
-	protected void deactivate() {
-		super.deactivate();
-		ThreadPoolUtils.shutdownAndAwaitTermination(this.executor, 0);
-	}
+    if (!config.enabled()) {
+      return;
+    }
+    this.config = config;
+    this.repository = new EdmijAuthRepository(this.config.email(), this.config.pasword());
+    this.executor.schedule(this.task, 0, TimeUnit.SECONDS);
+  }
 
-	protected final Runnable task = () -> {
-		/*
-		 * Update Map of prices
-		 */
-		var client = new OkHttpClient();
-		var request = new Request.Builder()
-				.url(EDMIJ_API_URL)
-				.build();
-		int httpStatusCode = 0;
-		var authFailed = false;
-		var unableToUpdatePrices = false;
+  @Override
+  @Deactivate
+  protected void deactivate() {
+    super.deactivate();
+    ThreadPoolUtils.shutdownAndAwaitTermination(this.executor, 0);
+  }
 
-		try (var response = client.newCall(request).execute()) {
-			httpStatusCode = response.code();
+  protected final Runnable task = () -> {
+    /*
+     * Update Map of prices
+     */
+    var client = new OkHttpClient.Builder()
+        .addInterceptor(new OAuth2Interceptor(this.repository))
+        .authenticator(new OAuth2Authenticator(this.repository))
+        .build();
+    var request = new Request.Builder()
+        .url(EDMIJ_API_URL)
+        .build();
+    try (var response = client.newCall(request).execute()) {
+      this.channel(TimeOfUseTariffEdmij.ChannelId.HTTP_STATUS_CODE).setNextValue(response.code());
 
-			if (!response.isSuccessful()) {
-				throw new IOException("Unexpected code " + response);
-			}
+      if (!response.isSuccessful()) {
+        throw new IOException("Unexpected code " + response);
+      }
+      this.updateTimeStamp = ZonedDateTime.now();
 
-			// store the time stamp
-			this.updateTimeStamp = ZonedDateTime.now();
+    } catch (IOException e) {
+      this.log.error("Failed to get Edmij tariff prices", e);
+    }
 
-		} catch (IOException | OpenemsNamedException e) {
-			e.printStackTrace();
-		}
-
-		this.channel(TimeOfUseTariffEdmij.ChannelId.HTTP_STATUS_CODE).setNextValue(httpStatusCode);
-		this.channel(TimeOfUseTariffEdmij.ChannelId.AUTHENTICATION_FAILED).setNextValue(authFailed);
 
 		/*
 		 * Schedule next price update for 2 pm
@@ -122,14 +125,14 @@ public class TimeOfUseTariffEdmijImpl extends AbstractOpenemsComponent
 		this.executor.schedule(this.task, delay, TimeUnit.SECONDS);
 	};
 
-	@Override
-	public TimeOfUsePrices getPrices() {
-		// return empty TimeOfUsePrices if data is not yet available.
-		if (this.updateTimeStamp == null) {
-			return TimeOfUsePrices.empty(ZonedDateTime.now());
-		}
+  @Override
+  public TimeOfUsePrices getPrices() {
+    // return empty TimeOfUsePrices if data is not yet available.
+    if (this.updateTimeStamp == null) {
+      return TimeOfUsePrices.empty(ZonedDateTime.now());
+    }
 
-		return TimeOfUseTariffUtils.getNext24HourPrices(Clock.systemDefaultZone() /* can be mocked for testing */,
-				this.prices.get(), this.updateTimeStamp);
-	}
+    return TimeOfUseTariffUtils.getNext24HourPrices(Clock.systemDefaultZone() /* can be mocked for testing */,
+        this.prices.get(), this.updateTimeStamp);
+  }
 }
