@@ -8,7 +8,7 @@ Bundle-Version: 1.0.0.${tstamp}
 	io.openems.common,\
 	io.openems.edge.common,\
 	io.openems.edge.timeofusetariff.api,\
-	io.openems.wrapper.okhttp,\
+	io.openems.wrapper.okhttp
 
 -testpath: \
 	${testpath}
