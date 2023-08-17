@@ -2,6 +2,7 @@ package io.openems.edge.ess.socomec;
 
 import com.google.common.collect.ImmutableMap;
 import io.openems.common.channel.AccessMode;
+import io.openems.common.channel.Level;
 import io.openems.common.exceptions.OpenemsError;
 import io.openems.common.exceptions.OpenemsException;
 import io.openems.edge.bridge.modbus.api.ElementToChannelConverter;
@@ -220,6 +221,8 @@ public class EssSocomecPmsImpl extends AbstractOpenemsSunSpecComponent implement
               this.lastAlarmTime = Instant.now();
               this.alarmCount++;
             });
+          } else if (this.alarmCount >= 3) {
+            this.channel(OpenemsComponent.ChannelId.STATE).setNextValue(Level.FAULT);
           }
         });
       }
@@ -228,9 +231,9 @@ public class EssSocomecPmsImpl extends AbstractOpenemsSunSpecComponent implement
 
   @Override
   public void handleEvent(Event event) {
-    switch (event.getTopic()) {
-      case EdgeEventConstants.TOPIC_CYCLE_EXECUTE_WRITE -> this.setHeartbeat();
-      case EdgeEventConstants.TOPIC_CYCLE_BEFORE_WRITE -> this.recoverAlarm();
+    if (event.getTopic().equals(EdgeEventConstants.TOPIC_CYCLE_BEFORE_WRITE)) {
+      this.setHeartbeat();
+      this.recoverAlarm();
     }
   }
 
@@ -278,7 +281,6 @@ public class EssSocomecPmsImpl extends AbstractOpenemsSunSpecComponent implement
         return Power.NO_CONSTRAINTS;
       }
     }
-    ;
     return constraints;
   }
 
