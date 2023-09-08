@@ -1,0 +1,7 @@
+= Socomec PMS ESS
+
+Implemented Natures::
+- SymmetricEss
+- ManagedSymmetricEss
+
+https://github.com/OpenEMS/openems/tree/develop/io.openems.edge.ess.socomec[Source Code icon:github[]]
