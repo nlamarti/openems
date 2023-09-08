@@ -168,64 +168,39 @@ public class EssSocomecPmsImpl extends AbstractOpenemsSunSpecComponent implement
 		// Change this to run in the handle function
 		this.channel(EssSocomecPms.ChannelId.STATUS).onUpdate(v -> {
 			switch ((Status) v.asEnum()) {
-			case OFF -> {
-				this.alarmCount = 0;
-				this.getSunSpecChannel(DefaultSunSpecModel.S802.SET_OP).ifPresent(c -> {
-					EnumWriteChannel channel = (EnumWriteChannel) c;
-					try {
-						channel.setNextWriteValue(DefaultSunSpecModel.S802_SetOp.CONNECT);
-					} catch (OpenemsNamedException e) {
-						this.logError(log, e.getMessage());
-					}
-				});
-				this.getSunSpecChannel(DefaultSunSpecModel.S715.OP_CTL).ifPresent(c -> {
-					EnumWriteChannel channel = (EnumWriteChannel) c;
-					try {
-						channel.setNextWriteValue(DefaultSunSpecModel.S715_OpCtl.START);
-					} catch (OpenemsNamedException e) {
-						this.logError(log, e.getMessage());
-					}
-				});
-			}
-			case RUNNING -> {
-				this.channel(OpenemsComponent.ChannelId.STATE).setNextValue(Level.OK);
-				this.getSunSpecChannel(DefaultSunSpecModel.S704.W_SET_ENA).ifPresent(c -> {
-					EnumWriteChannel channel = (EnumWriteChannel) c;
-					try {
-						channel.setNextWriteValue(DefaultSunSpecModel.S704_WSetEna.ENABLED);
-					} catch (OpenemsNamedException e) {
-						this.logError(log, e.getMessage());
-					}
-				});
-				this.getSunSpecChannel(DefaultSunSpecModel.S704.W_SET_MOD).ifPresent(c -> {
-					EnumWriteChannel channel = (EnumWriteChannel) c;
-					try {
-						channel.setNextWriteValue(DefaultSunSpecModel.S704_WSetMod.WATTS);
-					} catch (OpenemsNamedException e) {
-						this.logError(log, e.getMessage());
-					}
-				});
-				this.getSunSpecChannel(DefaultSunSpecModel.S704.VAR_SET_ENA).ifPresent(c -> {
-					EnumWriteChannel channel = (EnumWriteChannel) c;
-					try {
-						channel.setNextWriteValue(DefaultSunSpecModel.S704_VarSetEna.ENABLED);
-					} catch (OpenemsNamedException e) {
-						this.logError(log, e.getMessage());
-					}
-				});
-				this.getSunSpecChannel(DefaultSunSpecModel.S704.VAR_SET_MOD).ifPresent(c -> {
-					EnumWriteChannel channel = (EnumWriteChannel) c;
-					try {
-						channel.setNextWriteValue(DefaultSunSpecModel.S704_VarSetMod.VARS);
-					} catch (OpenemsNamedException e) {
-						this.logError(log, e.getMessage());
-					}
-				});
-			}
+			case OFF -> start();
+			case RUNNING -> enableCommunication();
 			default -> {
 			}
 			}
 		});
+	}
+
+	private void start() {
+		try {
+			((EnumWriteChannel) this.getSunSpecChannelOrError(DefaultSunSpecModel.S802.SET_OP))
+					.setNextWriteValue(DefaultSunSpecModel.S802_SetOp.CONNECT);
+			((EnumWriteChannel) this.getSunSpecChannelOrError(DefaultSunSpecModel.S715.OP_CTL))
+					.setNextWriteValue(DefaultSunSpecModel.S715_OpCtl.START);
+		} catch (OpenemsNamedException e) {
+			this.logError(log, e.getMessage());
+		}
+	}
+
+	private void enableCommunication() {
+		this.channel(OpenemsComponent.ChannelId.STATE).setNextValue(Level.OK);
+		try {
+			((EnumWriteChannel) this.getSunSpecChannelOrError(DefaultSunSpecModel.S704.W_SET_ENA))
+					.setNextWriteValue(DefaultSunSpecModel.S704_WSetEna.ENABLED);
+			((EnumWriteChannel) this.getSunSpecChannelOrError(DefaultSunSpecModel.S704.W_SET_MOD))
+					.setNextWriteValue(DefaultSunSpecModel.S704_WSetMod.WATTS);
+			((EnumWriteChannel) this.getSunSpecChannelOrError(DefaultSunSpecModel.S704.VAR_SET_ENA))
+					.setNextWriteValue(DefaultSunSpecModel.S704_VarSetEna.ENABLED);
+			((EnumWriteChannel) this.getSunSpecChannelOrError(DefaultSunSpecModel.S704.VAR_SET_MOD))
+					.setNextWriteValue(DefaultSunSpecModel.S704_VarSetMod.VARS);
+		} catch (OpenemsNamedException e) {
+			this.logError(log, e.getMessage());
+		}
 	}
 
 	private void recoverAlarm() throws OpenemsNamedException {
@@ -233,8 +208,8 @@ public class EssSocomecPmsImpl extends AbstractOpenemsSunSpecComponent implement
 				.toSeconds() > Duration.ofSeconds(30).toSeconds()) {
 			Status s = this.channel(EssSocomecPms.ChannelId.STATUS).getNextValue().asEnum();
 			if (s.equals(Status.FAULT) && this.alarmCount < 3) {
-				IntegerWriteChannel channel = this.getSunSpecChannelOrError(DefaultSunSpecModel.S715.ALARM_RESET);
-				channel.setNextWriteValue(1);
+				((IntegerWriteChannel) this.getSunSpecChannelOrError(DefaultSunSpecModel.S715.ALARM_RESET))
+						.setNextWriteValue(1);
 				this.lastAlarmTime = Instant.now();
 				this.alarmCount++;
 			} else if (s.equals(Status.FAULT) && this.alarmCount >= 3) {
@@ -279,10 +254,10 @@ public class EssSocomecPmsImpl extends AbstractOpenemsSunSpecComponent implement
 
 	@Override
 	public void applyPower(int activePower, int reactivePower) throws OpenemsError.OpenemsNamedException {
-		FloatWriteChannel active = this.getSunSpecChannelOrError(DefaultSunSpecModel.S704.W_SET);
-		FloatWriteChannel reactive = this.getSunSpecChannelOrError(DefaultSunSpecModel.S704.VAR_SET);
-		active.setNextWriteValue(Float.valueOf(activePower));
-		reactive.setNextWriteValue(Float.valueOf(reactivePower));
+		((FloatWriteChannel) this.getSunSpecChannelOrError(DefaultSunSpecModel.S704.W_SET))
+				.setNextWriteValue(Float.valueOf(activePower));
+		((FloatWriteChannel) this.getSunSpecChannelOrError(DefaultSunSpecModel.S704.VAR_SET))
+				.setNextWriteValue(Float.valueOf(reactivePower));
 	}
 
 	@Override
