@@ -3,7 +3,7 @@ package io.openems.edge.ess.socomec;
 import org.osgi.service.metatype.annotations.AttributeDefinition;
 import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 
-@ObjectClassDefinition(name = "Socomec PMS", //
+@ObjectClassDefinition(name = "ESS Socomec PMS", //
 		description = "Implements the Socomec PMS ESS.")
 @interface Config {
 
@@ -26,5 +26,4 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 	String Modbus_target() default "(enabled=true)";
 
 	String webconsole_configurationFactory_nameHint() default "Socomec PMS ESS [{id}]";
-
 }

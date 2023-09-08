@@ -20,8 +20,10 @@ import org.osgi.service.component.ComponentContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Deque;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -279,13 +281,13 @@ public abstract class AbstractOpenemsSunSpecComponent extends AbstractOpenemsMod
 	protected void addBlock(int startAddress, SunSpecModel model, Priority priority) throws OpenemsException {
 		this.logInfo(this.log, "Adding SunSpec-Model [" + model.getBlockId() + ":" + model.label() + "] starting at ["
 				+ startAddress + "]");
-		AbstractModbusElement<?>[] elements = new AbstractModbusElement[model.points().length];
+		Deque<AbstractModbusElement<?>> elements = new ArrayDeque<>();
 		startAddress += 2;
 		for (var i = 0; i < model.points().length; i++) {
 			var point = model.points()[i];
 			AbstractModbusElement<?> element = point.get().generateModbusElement(startAddress);
 			startAddress += element.getLength();
-			elements[i] = element;
+			elements.add(element);
 
 			SunSChannelId<?> channelId = point.getChannelId();
 			this.addChannel(channelId);
@@ -308,8 +310,10 @@ public abstract class AbstractOpenemsSunSpecComponent extends AbstractOpenemsMod
 				}
 
 				// Add a scale-factor mapping between Element and Channel
-				element = this.m(channelId, element,
-						new ElementToChannelScaleFactorConverter(this, point, scaleFactorPoint.getChannelId()));
+				ElementToChannelScaleFactorConverter elSfConverter = new ElementToChannelScaleFactorConverter(this,
+						point, scaleFactorPoint.getChannelId());
+				;
+				element = this.m(channelId, element, elSfConverter);
 
 			} else {
 				// Add a direct mapping between Element and Channel
@@ -342,16 +346,27 @@ public abstract class AbstractOpenemsSunSpecComponent extends AbstractOpenemsMod
 				break;
 			}
 		}
-		IntStream.iterate(0, i -> i + MAXIMUM_TASK_LENGTH)
-				.limit((long) Math.ceil((double) elements.length / MAXIMUM_TASK_LENGTH))
-				.mapToObj(j ->  Arrays.copyOfRange(elements, j, Math.min(j + MAXIMUM_TASK_LENGTH, elements.length)))
-				.forEach(e -> {
-					try {
-						this.modbusProtocol.addTask(new FC3ReadRegistersTask(e[0].getStartAddress(), priority, e));
-					} catch (OpenemsException ex) {
-						throw new RuntimeException(ex);
-					}
-				});
+
+		var length = 0;
+		var taskElements = new ArrayDeque<AbstractModbusElement<?>>();
+		var element = elements.pollFirst();
+		while (element != null) {
+			if (length + element.getLength() > MAXIMUM_TASK_LENGTH) {
+				this.modbusProtocol.addTask(//
+						new FC3ReadRegistersTask(//
+								taskElements.peekFirst().getStartAddress(), priority, //
+								taskElements.toArray(new AbstractModbusElement[taskElements.size()])));
+				length = 0;
+				taskElements.clear();
+			}
+			taskElements.add(element);
+			length += element.getLength();
+			element = elements.pollFirst();
+		}
+		this.modbusProtocol.addTask(//
+				new FC3ReadRegistersTask(//
+						taskElements.peekFirst().getStartAddress(), priority, //
+						taskElements.toArray(new AbstractModbusElement[taskElements.size()])));
 	}
 
 	/**

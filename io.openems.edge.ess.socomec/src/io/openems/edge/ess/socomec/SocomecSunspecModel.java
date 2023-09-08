@@ -12,34 +12,12 @@ public enum SocomecSunspecModel implements SunSpecModel {
       "Socomec PMS ",
       "Vendor model providing PMS states, warnings and alarms details ",
       "",
-      68,
+      66,
       SocomecSunspecModel.S64901.values(),
       SunSpecModelType.VENDOR_SPECIFIC //
   );
 
   public enum S64901 implements SunSpecPoint {
-    ID(new PointImpl(
-        "S64901_ID",
-        "Model ID",
-        "Model identifier",
-        "",
-        PointType.UINT16,
-        true,
-        AccessMode.READ_ONLY,
-        Unit.NONE,
-        "",
-        new OptionsEnum[0])),
-    L(new PointImpl(
-        "S64901_L",
-        "Model Length",
-        "Model length",
-        "",
-        PointType.UINT16,
-        true,
-        AccessMode.READ_ONLY,
-        Unit.NONE,
-        "",
-        new OptionsEnum[0])),
     SW1(new PointImpl(
         "S64901_SW1",
         "States Word 1",
@@ -49,7 +27,7 @@ public enum SocomecSunspecModel implements SunSpecModel {
         false,
         AccessMode.READ_ONLY,
         Unit.NONE,
-        "",
+		null,
         S64901_SW1.values())),
     SW2(new PointImpl(
         "S64901_SW2",
@@ -60,7 +38,7 @@ public enum SocomecSunspecModel implements SunSpecModel {
         false,
         AccessMode.READ_ONLY,
         Unit.NONE,
-        "",
+		null,
         S64901_SW2.values())),
     SW3(new PointImpl(
         "S64901_SW3",
@@ -71,7 +49,7 @@ public enum SocomecSunspecModel implements SunSpecModel {
         false,
         AccessMode.READ_ONLY,
         Unit.NONE,
-        "",
+		null,
         new OptionsEnum[0])),
     SW4(new PointImpl(
         "S64901_SW4",
@@ -82,7 +60,7 @@ public enum SocomecSunspecModel implements SunSpecModel {
         false,
         AccessMode.READ_ONLY,
         Unit.NONE,
-        "",
+		null,
         new OptionsEnum[0])),
     SW5(new PointImpl(
         "S64901_SW5",
@@ -93,7 +71,7 @@ public enum SocomecSunspecModel implements SunSpecModel {
         false,
         AccessMode.READ_ONLY,
         Unit.NONE,
-        "",
+		null,
         new OptionsEnum[0])),
     SW6(new PointImpl(
         "S64901_SW6",
@@ -104,7 +82,7 @@ public enum SocomecSunspecModel implements SunSpecModel {
         false,
         AccessMode.READ_ONLY,
         Unit.NONE,
-        "",
+		null,
         new OptionsEnum[0])),
     SW7(new PointImpl(
         "S64901_SW7",
@@ -115,7 +93,7 @@ public enum SocomecSunspecModel implements SunSpecModel {
         false,
         AccessMode.READ_ONLY,
         Unit.NONE,
-        "",
+		null,
         new OptionsEnum[0])),
     // Empty
     SW8(new PointImpl(
@@ -127,7 +105,7 @@ public enum SocomecSunspecModel implements SunSpecModel {
         false,
         AccessMode.READ_ONLY,
         Unit.NONE,
-        "",
+		null,
         new OptionsEnum[0])),
     // Empty
     SW9(new PointImpl(
@@ -139,7 +117,7 @@ public enum SocomecSunspecModel implements SunSpecModel {
         false,
         AccessMode.READ_ONLY,
         Unit.NONE,
-        "",
+		null,
         new OptionsEnum[0])),
     // Empty
     SW10(new PointImpl(
@@ -151,7 +129,7 @@ public enum SocomecSunspecModel implements SunSpecModel {
         false,
         AccessMode.READ_ONLY,
         Unit.NONE,
-        "",
+		null,
         new OptionsEnum[0])),
     // Empty
     SW11(new PointImpl(
@@ -163,7 +141,7 @@ public enum SocomecSunspecModel implements SunSpecModel {
         false,
         AccessMode.READ_ONLY,
         Unit.NONE,
-        "",
+		null,
         new OptionsEnum[0])),
     // Empty
     SW12(new PointImpl(
@@ -175,7 +153,7 @@ public enum SocomecSunspecModel implements SunSpecModel {
         false,
         AccessMode.READ_ONLY,
         Unit.NONE,
-        "",
+		null,
         new OptionsEnum[0])),
     // Empty
     SW13(new PointImpl(
@@ -187,7 +165,7 @@ public enum SocomecSunspecModel implements SunSpecModel {
         false,
         AccessMode.READ_ONLY,
         Unit.NONE,
-        "",
+		null,
         new OptionsEnum[0])),
 
     // Empty
@@ -200,7 +178,7 @@ public enum SocomecSunspecModel implements SunSpecModel {
         false,
         AccessMode.READ_ONLY,
         Unit.NONE,
-        "",
+		null,
         new OptionsEnum[0])),
     // Empty
     SW15(new PointImpl(
@@ -212,7 +190,7 @@ public enum SocomecSunspecModel implements SunSpecModel {
         false,
         AccessMode.READ_ONLY,
         Unit.NONE,
-        "",
+		null,
         new OptionsEnum[0])),
     // Empty
     SW16(new PointImpl(
@@ -224,7 +202,7 @@ public enum SocomecSunspecModel implements SunSpecModel {
         false,
         AccessMode.READ_ONLY,
         Unit.NONE,
-        "",
+		null,
         new OptionsEnum[0])),
     WW1(new PointImpl(
         "S64901_WW1",
@@ -235,7 +213,7 @@ public enum SocomecSunspecModel implements SunSpecModel {
         false,
         AccessMode.READ_ONLY,
         Unit.NONE,
-        "",
+		null,
         new OptionsEnum[0])),
     WW2(new PointImpl(
         "S64901_WW2",
@@ -246,7 +224,7 @@ public enum SocomecSunspecModel implements SunSpecModel {
         false,
         AccessMode.READ_ONLY,
         Unit.NONE,
-        "",
+		null,
         new OptionsEnum[0])),
     WW3(new PointImpl(
         "S64901_WW3",
@@ -257,7 +235,7 @@ public enum SocomecSunspecModel implements SunSpecModel {
         false,
         AccessMode.READ_ONLY,
         Unit.NONE,
-        "",
+		null,
         new OptionsEnum[0])),
     WW4(new PointImpl(
         "S64901_WW4",
@@ -268,7 +246,7 @@ public enum SocomecSunspecModel implements SunSpecModel {
         false,
         AccessMode.READ_ONLY,
         Unit.NONE,
-        "",
+		null,
         new OptionsEnum[0])),
     WW5(new PointImpl(
         "S64901_WW5",
@@ -279,7 +257,7 @@ public enum SocomecSunspecModel implements SunSpecModel {
         false,
         AccessMode.READ_ONLY,
         Unit.NONE,
-        "",
+		null,
         new OptionsEnum[0])),
     WW6(new PointImpl(
         "S64901_WW6",
@@ -290,7 +268,7 @@ public enum SocomecSunspecModel implements SunSpecModel {
         false,
         AccessMode.READ_ONLY,
         Unit.NONE,
-        "",
+		null,
         new OptionsEnum[0])),
     WW7(new PointImpl(
         "S64901_WW7",
@@ -301,7 +279,7 @@ public enum SocomecSunspecModel implements SunSpecModel {
         false,
         AccessMode.READ_ONLY,
         Unit.NONE,
-        "",
+		null,
         new OptionsEnum[0])),
     WW8(new PointImpl(
         "S64901_WW8",
@@ -312,7 +290,7 @@ public enum SocomecSunspecModel implements SunSpecModel {
         false,
         AccessMode.READ_ONLY,
         Unit.NONE,
-        "",
+		null,
         new OptionsEnum[0])),
     // Empty
     WW9(new PointImpl(
@@ -324,7 +302,7 @@ public enum SocomecSunspecModel implements SunSpecModel {
         false,
         AccessMode.READ_ONLY,
         Unit.NONE,
-        "",
+		null,
         new OptionsEnum[0])),
     // Empty
     WW10(new PointImpl(
@@ -336,7 +314,7 @@ public enum SocomecSunspecModel implements SunSpecModel {
         false,
         AccessMode.READ_ONLY,
         Unit.NONE,
-        "",
+		null,
         new OptionsEnum[0])),
     // Empty
     WW11(new PointImpl(
@@ -348,7 +326,7 @@ public enum SocomecSunspecModel implements SunSpecModel {
         false,
         AccessMode.READ_ONLY,
         Unit.NONE,
-        "",
+		null,
         new OptionsEnum[0])),
     // Empty
     WW12(new PointImpl(
@@ -360,7 +338,7 @@ public enum SocomecSunspecModel implements SunSpecModel {
         false,
         AccessMode.READ_ONLY,
         Unit.NONE,
-        "",
+		null,
         new OptionsEnum[0])),
     // Empty
     WW13(new PointImpl(
@@ -372,7 +350,7 @@ public enum SocomecSunspecModel implements SunSpecModel {
         false,
         AccessMode.READ_ONLY,
         Unit.NONE,
-        "",
+		null,
         new OptionsEnum[0])),
 
     // Empty
@@ -385,7 +363,7 @@ public enum SocomecSunspecModel implements SunSpecModel {
         false,
         AccessMode.READ_ONLY,
         Unit.NONE,
-        "",
+		null,
         new OptionsEnum[0])),
     // Empty
     WW15(new PointImpl(
@@ -397,7 +375,7 @@ public enum SocomecSunspecModel implements SunSpecModel {
         false,
         AccessMode.READ_ONLY,
         Unit.NONE,
-        "",
+		null,
         new OptionsEnum[0])),
     // Empty
     WW16(new PointImpl(
@@ -409,7 +387,7 @@ public enum SocomecSunspecModel implements SunSpecModel {
         false,
         AccessMode.READ_ONLY,
         Unit.NONE,
-        "",
+		null,
         new OptionsEnum[0])),
     AW1(new PointImpl(
         "S64901_AW1",
@@ -420,7 +398,7 @@ public enum SocomecSunspecModel implements SunSpecModel {
         false,
         AccessMode.READ_ONLY,
         Unit.NONE,
-        "",
+		null,
         new OptionsEnum[0])),
     AW2(new PointImpl(
         "S64901_AW2",
@@ -431,7 +409,7 @@ public enum SocomecSunspecModel implements SunSpecModel {
         false,
         AccessMode.READ_ONLY,
         Unit.NONE,
-        "",
+		null,
         new OptionsEnum[0])),
     AW3(new PointImpl(
         "S64901_AW3",
@@ -442,7 +420,7 @@ public enum SocomecSunspecModel implements SunSpecModel {
         false,
         AccessMode.READ_ONLY,
         Unit.NONE,
-        "",
+		null,
         new OptionsEnum[0])),
     AW4(new PointImpl(
         "S64901_AW4",
@@ -453,7 +431,7 @@ public enum SocomecSunspecModel implements SunSpecModel {
         false,
         AccessMode.READ_ONLY,
         Unit.NONE,
-        "",
+		null,
         new OptionsEnum[0])),
     AW5(new PointImpl(
         "S64901_AW5",
@@ -464,7 +442,7 @@ public enum SocomecSunspecModel implements SunSpecModel {
         false,
         AccessMode.READ_ONLY,
         Unit.NONE,
-        "",
+		null,
         new OptionsEnum[0])),
     AW6(new PointImpl(
         "S64901_AW6",
@@ -475,7 +453,7 @@ public enum SocomecSunspecModel implements SunSpecModel {
         false,
         AccessMode.READ_ONLY,
         Unit.NONE,
-        "",
+		null,
         new OptionsEnum[0])),
     AW7(new PointImpl(
         "S64901_AW7",
@@ -486,7 +464,7 @@ public enum SocomecSunspecModel implements SunSpecModel {
         false,
         AccessMode.READ_ONLY,
         Unit.NONE,
-        "",
+		null,
         new OptionsEnum[0])),
     AW8(new PointImpl(
         "S64901_AW8",
@@ -497,7 +475,7 @@ public enum SocomecSunspecModel implements SunSpecModel {
         false,
         AccessMode.READ_ONLY,
         Unit.NONE,
-        "",
+		null,
         new OptionsEnum[0])),
     // Empty
     AW9(new PointImpl(
@@ -509,7 +487,7 @@ public enum SocomecSunspecModel implements SunSpecModel {
         false,
         AccessMode.READ_ONLY,
         Unit.NONE,
-        "",
+		null,
         new OptionsEnum[0])),
     // Empty
     AW10(new PointImpl(
@@ -521,7 +499,7 @@ public enum SocomecSunspecModel implements SunSpecModel {
         false,
         AccessMode.READ_ONLY,
         Unit.NONE,
-        "",
+		null,
         new OptionsEnum[0])),
     // Empty
     AW11(new PointImpl(
@@ -533,7 +511,7 @@ public enum SocomecSunspecModel implements SunSpecModel {
         false,
         AccessMode.READ_ONLY,
         Unit.NONE,
-        "",
+		null,
         new OptionsEnum[0])),
     // Empty
     AW12(new PointImpl(
@@ -545,7 +523,7 @@ public enum SocomecSunspecModel implements SunSpecModel {
         false,
         AccessMode.READ_ONLY,
         Unit.NONE,
-        "",
+		null,
         new OptionsEnum[0])),
     // Empty
     AW13(new PointImpl(
@@ -557,7 +535,7 @@ public enum SocomecSunspecModel implements SunSpecModel {
         false,
         AccessMode.READ_ONLY,
         Unit.NONE,
-        "",
+		null,
         new OptionsEnum[0])),
 
     // Empty
@@ -570,7 +548,7 @@ public enum SocomecSunspecModel implements SunSpecModel {
         false,
         AccessMode.READ_ONLY,
         Unit.NONE,
-        "",
+		null,
         new OptionsEnum[0])),
     // Empty
     AW15(new PointImpl(
@@ -582,7 +560,7 @@ public enum SocomecSunspecModel implements SunSpecModel {
         false,
         AccessMode.READ_ONLY,
         Unit.NONE,
-        "",
+		null,
         new OptionsEnum[0])),
     // Empty
     AW16(new PointImpl(
@@ -594,7 +572,7 @@ public enum SocomecSunspecModel implements SunSpecModel {
         false,
         AccessMode.READ_ONLY,
         Unit.NONE,
-        "",
+		null,
         new OptionsEnum[0]));
 
     private final PointImpl impl;
