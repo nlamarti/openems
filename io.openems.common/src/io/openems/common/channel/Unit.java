@@ -161,6 +161,15 @@ public enum Unit {
 	 * Unit of Apparent Energy [VAh].
 	 */
 	VOLT_AMPERE_HOURS("VAh"),
+	
+	// ##########
+	// Cumulated Energy
+	// ##########
+
+	/**
+	 * Unit of cumulated Energy [Wh_Σ].
+	 */
+	CUMULATED_WATT_HOURS("Wh_Σ", WATT_HOURS),
 
 	// ##########
 	// Energy Tariff
@@ -258,15 +267,31 @@ public enum Unit {
 	private final Unit baseUnit;
 	private final int scaleFactor;
 	private final String symbol;
+	public final Unit discreteUnit;
 
 	private Unit(String symbol) {
 		this(symbol, null, 0);
+	}
+	
+	/**
+	 * Use this constructor for cumulated Units.
+	 * 
+	 * @param symbol       the unit symbol
+	 * @param discreteUnit the discrete unit that is derived by subtracting first
+	 *                     cumulated value from last cumulated value.
+	 */
+	private Unit(String symbol, Unit discreteUnit) {
+		this.symbol = symbol;
+		this.baseUnit = null;
+		this.scaleFactor = 0;
+		this.discreteUnit = discreteUnit;
 	}
 
 	private Unit(String symbol, Unit baseUnit, int scaleFactor) {
 		this.symbol = symbol;
 		this.baseUnit = baseUnit;
 		this.scaleFactor = scaleFactor;
+		this.discreteUnit = null;
 	}
 
 	public Unit getBaseUnit() {
@@ -339,6 +364,7 @@ public enum Unit {
 		case THOUSANDTH:
 		case VOLT_AMPERE_HOURS:
 		case VOLT_AMPERE_REACTIVE_HOURS:
+		case CUMULATED_WATT_HOURS:
 		case WATT_HOURS_BY_WATT_PEAK:
 			return value + " " + this.symbol;
 		case ON_OFF:

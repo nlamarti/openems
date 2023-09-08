@@ -540,6 +540,7 @@ public class Rrd4jTimedataImpl extends AbstractOpenemsComponent
 		case CUMULATED_SECONDS:
 		case WATT_HOURS:
 		case KILOWATT_HOURS:
+		case CUMULATED_WATT_HOURS:
 		case VOLT_AMPERE_HOURS:
 		case VOLT_AMPERE_REACTIVE_HOURS:
 		case KILOVOLT_AMPERE_REACTIVE_HOURS:
